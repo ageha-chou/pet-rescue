@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import './screens/tabs_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
+      .then((_) => runApp(MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -16,9 +20,24 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromRGBO(165, 213, 213, 1),
         accentColor: Color.fromRGBO(165, 213, 213, 0.8),
         backgroundColor: Color.fromRGBO(253, 246, 240, 1),
-        cardTheme: CardTheme(
-          color: Color.fromRGBO(216, 227, 231, 1),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'Nunito',
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: Color.fromRGBO(19, 44, 51, 1),
+                ),
+              ),
         ),
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 15,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(19, 44, 51, 1),
+              ),
+            ),
       ),
       home: TabsScreen(),
     );

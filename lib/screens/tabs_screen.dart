@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:pet_rescue/screens/home_screen.dart';
 import 'package:pet_rescue/screens/test_screen.dart';
 
@@ -12,12 +13,7 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  List<Map<String, Object>> pages = [
-    {'page': HomeScreen(), 'title': 'Home'},
-    {'page': TestScreen('Adopted Pets'), 'title': 'Adopted Pets'},
-    {'page': TestScreen('Notifications'), 'title': 'Notifications'},
-    {'page': TestScreen('Info'), 'title': 'Info'},
-  ];
+  bool _isVolunteer = false;
 
   int _selectedScreenIndex = 0;
 
@@ -25,6 +21,10 @@ class _TabsScreenState extends State<TabsScreen> {
     setState(() {
       _selectedScreenIndex = index;
     });
+  }
+
+  String get user {
+    return _isVolunteer ? 'Volunteer' : 'Normal User';
   }
 
   Widget _buildNavButton(
@@ -45,7 +45,7 @@ class _TabsScreenState extends State<TabsScreen> {
             color: _selectedScreenIndex == index
                 ? const Color.fromRGBO(19, 44, 51, 1)
                 : const Color.fromRGBO(19, 44, 51, 0.45),
-            height: 30,
+            height: 32,
           ),
           SizedBox(height: 3),
           Text(
@@ -54,8 +54,43 @@ class _TabsScreenState extends State<TabsScreen> {
               color: _selectedScreenIndex == index
                   ? Colors.white70
                   : Colors.black26,
-              fontSize: 12,
+              fontSize: 12.5,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  PreferredSizeWidget appBar() {
+    return AppBar(
+      title: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Image.asset(
+                'assets/images/logo.png',
+                color: Color.fromRGBO(19, 44, 51, 1),
+                height: 60,
+              ),
+              // Text(pages[_selectedScreenIndex]['title'] as String),
+            ],
+          ),
+          Row(
+            children: [
+              CircleAvatar(
+                child: Icon(Icons.person),
+                foregroundColor: Color.fromRGBO(19, 44, 51, 1),
+              ),
+              SizedBox(width: 5),
+              Text(
+                user,
+                style: TextStyle(
+                  fontSize: 16,
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -64,39 +99,15 @@ class _TabsScreenState extends State<TabsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    List<Map<String, Object>> pages = [
+      {'page': HomeScreen(_isVolunteer), 'title': 'Home'},
+      {'page': TestScreen('Adopted Pets'), 'title': 'Adopted Pets'},
+      {'page': TestScreen('Notifications'), 'title': 'Notifications'},
+      {'page': TestScreen('Info'), 'title': 'Info'},
+    ];
+
     return Scaffold(
-      appBar: AppBar(
-        title: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Row(
-              children: [
-                Image.asset(
-                  'assets/images/logo.png',
-                  color: Color.fromRGBO(19, 44, 51, 1),
-                  height: 60,
-                ),
-                Text(pages[_selectedScreenIndex]['title'] as String),
-              ],
-            ),
-            Row(
-              children: [
-                CircleAvatar(
-                  child: Icon(Icons.person),
-                  foregroundColor: Color.fromRGBO(19, 44, 51, 1),
-                ),
-                SizedBox(width: 5),
-                Text(
-                  'Ageha',
-                  style: TextStyle(
-                    fontSize: 18,
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
+      appBar: appBar(),
       backgroundColor: Theme.of(context).backgroundColor,
       body: pages[_selectedScreenIndex]['page'] as Widget,
       bottomNavigationBar: BottomAppBar(
@@ -146,7 +157,7 @@ class _TabsScreenState extends State<TabsScreen> {
         child: FittedBox(
           child: FloatingActionButton(
             elevation: 4,
-            backgroundColor: const Color.fromRGBO(255, 70, 70, 0.7),
+            backgroundColor: const Color.fromRGBO(210, 88, 88, 0.8),
             child: Image.asset(
               'assets/images/help.png',
               color: const Color.fromRGBO(255, 245, 238, 0.9),
