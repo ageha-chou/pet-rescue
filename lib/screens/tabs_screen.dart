@@ -1,9 +1,9 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:pet_rescue/screens/home_screen.dart';
 import 'package:pet_rescue/screens/test_screen.dart';
+
+import '../dummy_data.dart';
 
 class TabsScreen extends StatefulWidget {
   const TabsScreen({Key? key}) : super(key: key);
@@ -13,7 +13,8 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-  bool _isVolunteer = false;
+  //Change role here
+  Role _role = Role.Guest;
 
   int _selectedScreenIndex = 0;
 
@@ -23,8 +24,15 @@ class _TabsScreenState extends State<TabsScreen> {
     });
   }
 
-  String get user {
-    return _isVolunteer ? 'Volunteer' : 'Normal User';
+  String get roleText {
+    switch (_role) {
+      case Role.Guest:
+        return "Guest";
+      case Role.Adopter:
+        return "Adopter";
+      case Role.Volunteer:
+        return "Volunteer";
+    }
   }
 
   Widget _buildNavButton(
@@ -35,6 +43,7 @@ class _TabsScreenState extends State<TabsScreen> {
     return TextButton(
       style: ButtonStyle(
         splashFactory: NoSplash.splashFactory,
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
       ),
       onPressed: onPressHandler,
       child: Column(
@@ -62,8 +71,38 @@ class _TabsScreenState extends State<TabsScreen> {
     );
   }
 
-  PreferredSizeWidget appBar() {
+  Widget _buildAppBarTextButton({
+    required BuildContext ctx,
+    required String title,
+    VoidCallback? onTapHandler,
+  }) {
+    return TextButton(
+      onPressed: onTapHandler,
+      child: Text(
+        title,
+        style: Theme.of(ctx).textTheme.headline6,
+      ),
+      style: ButtonStyle(
+        splashFactory: NoSplash.splashFactory,
+        overlayColor: MaterialStateProperty.all(Colors.transparent),
+      ),
+    );
+  }
+
+  PreferredSizeWidget appBar(BuildContext ctx) {
     return AppBar(
+      backgroundColor: Theme.of(context).primaryColor,
+      actions: [
+        if (_role == Role.Guest)
+          Row(
+            children: [
+              _buildAppBarTextButton(
+                  ctx: context, title: 'Sign In', onTapHandler: () {}),
+              _buildAppBarTextButton(
+                  ctx: context, title: 'Sign Up', onTapHandler: () {}),
+            ],
+          ),
+      ],
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -77,21 +116,22 @@ class _TabsScreenState extends State<TabsScreen> {
               // Text(pages[_selectedScreenIndex]['title'] as String),
             ],
           ),
-          Row(
-            children: [
-              CircleAvatar(
-                child: Icon(Icons.person),
-                foregroundColor: Color.fromRGBO(19, 44, 51, 1),
-              ),
-              SizedBox(width: 5),
-              Text(
-                user,
-                style: TextStyle(
-                  fontSize: 16,
+          if (_role != Role.Guest)
+            Row(
+              children: [
+                CircleAvatar(
+                  child: Icon(Icons.person),
+                  foregroundColor: Color.fromRGBO(19, 44, 51, 1),
                 ),
-              ),
-            ],
-          ),
+                SizedBox(width: 5),
+                Text(
+                  roleText,
+                  style: TextStyle(
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
         ],
       ),
     );
@@ -100,19 +140,19 @@ class _TabsScreenState extends State<TabsScreen> {
   @override
   Widget build(BuildContext context) {
     List<Map<String, Object>> pages = [
-      {'page': HomeScreen(_isVolunteer), 'title': 'Home'},
+      {'page': HomeScreen(_role), 'title': 'Home'},
       {'page': TestScreen('Adopted Pets'), 'title': 'Adopted Pets'},
       {'page': TestScreen('Notifications'), 'title': 'Notifications'},
       {'page': TestScreen('Info'), 'title': 'Info'},
     ];
 
     return Scaffold(
-      appBar: appBar(),
+      appBar: appBar(context),
       backgroundColor: Theme.of(context).backgroundColor,
       body: pages[_selectedScreenIndex]['page'] as Widget,
       bottomNavigationBar: BottomAppBar(
         // color: Color.fromRGBO(246, 225, 225, 1),
-        color: Theme.of(context).accentColor,
+        color: Theme.of(context).colorScheme.secondary,
         shape: CircularNotchedRectangle(),
         child: Row(
           mainAxisSize: MainAxisSize.max,
@@ -159,7 +199,7 @@ class _TabsScreenState extends State<TabsScreen> {
             elevation: 4,
             backgroundColor: const Color.fromRGBO(210, 88, 88, 0.8),
             child: Image.asset(
-              'assets/images/help.png',
+              'assets/images/sos.png',
               color: const Color.fromRGBO(255, 245, 238, 0.9),
               height: 50,
             ),

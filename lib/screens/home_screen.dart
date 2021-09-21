@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
-  final bool isVolunteer;
+import '../dummy_data.dart';
 
-  HomeScreen(this.isVolunteer);
+class HomeScreen extends StatelessWidget {
+  final Role role;
+
+  HomeScreen(this.role);
 
   Widget _buildCard({
     required String label,
@@ -81,17 +83,18 @@ class HomeScreen extends StatelessWidget {
               imageUrl: 'assets/images/wish-list.png',
               ctx: context,
             ),
-            isVolunteer
-                ? _buildCard(
-                    label: 'Pet Reports',
-                    imageUrl: 'assets/images/report.png',
-                    ctx: context,
-                  )
-                : _buildCard(
-                    label: 'Become a Volunteer',
-                    imageUrl: 'assets/images/volunteer.png',
-                    ctx: context,
-                  ),
+            if (role == Role.Volunteer)
+              _buildCard(
+                label: 'Pet Reports',
+                imageUrl: 'assets/images/report.png',
+                ctx: context,
+              ),
+            if (role == Role.Adopter)
+              _buildCard(
+                label: 'Become a Volunteer',
+                imageUrl: 'assets/images/volunteer.png',
+                ctx: context,
+              ),
           ],
         ),
       ],
