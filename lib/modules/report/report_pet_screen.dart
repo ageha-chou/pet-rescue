@@ -142,31 +142,55 @@ class ReportPetScreen extends GetView<ReportPetController> {
               const SizedBox(height: 20),
               Obx(
                 () => controller.imageFiles.length != 0
-                    ? Container(
-                        width: MediaQuery.of(context).size.width,
-                        height: 150,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: controller.imageFiles.length,
-                            itemBuilder: (ctx, i) {
-                              return Container(
-                                margin:
-                                    const EdgeInsets.symmetric(horizontal: 10),
-                                width: 100,
-                                child: Image.file(
-                                    File(controller.imageFiles[i].path),
-                                    fit: BoxFit.cover),
-                              );
-                            }),
+                    ? Stack(
+                        children: [
+                          Container(
+                            decoration: BoxDecoration(
+                              border: Border.all(color: ColorConstants.black),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20.0)),
+                            ),
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 30,
+                              horizontal: 10,
+                            ),
+                            width: MediaQuery.of(context).size.width,
+                            height: 180,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: controller.imageFiles.length,
+                                itemBuilder: (ctx, i) {
+                                  return Container(
+                                    margin: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    width: 100,
+                                    child: Image.file(
+                                        File(controller.imageFiles[i].path),
+                                        fit: BoxFit.cover),
+                                  );
+                                }),
+                          ),
+                          Positioned(
+                            right: 0,
+                            top: -7,
+                            child: IconButton(
+                                onPressed: () {
+                                  controller.imageFiles.clear();
+                                },
+                                icon: Icon(Icons.clear)),
+                          ),
+                        ],
                       )
                     : InkWell(
                         onTap: () async {
                           getImage();
                         },
                         child: Container(
-                          height: 150,
+                          height: 180,
                           decoration: BoxDecoration(
                             border: Border.all(color: ColorConstants.black),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(20.0)),
                           ),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
