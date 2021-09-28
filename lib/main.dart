@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:pet_rescue/routes/app_pages.dart';
 
-import './screens/tabs_screen.dart';
+import 'modules/home/main_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +15,7 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pet Rescue',
       theme: ThemeData(
@@ -35,10 +37,12 @@ class MyApp extends StatelessWidget {
                 color: Color.fromRGBO(19, 44, 51, 1),
               ),
             ),
-        colorScheme: ColorScheme.fromSwatch()
-            .copyWith(secondary: Color.fromRGBO(165, 213, 213, 0.8)),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: Color.fromRGBO(165, 213, 213, 0.8),
+        ),
       ),
-      home: TabsScreen(),
+      initialRoute: Routes.HOME,
+      getPages: AppPages.routes,
     );
   }
 }
