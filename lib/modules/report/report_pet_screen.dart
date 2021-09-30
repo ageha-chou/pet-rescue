@@ -211,7 +211,9 @@ class ReportPetScreen extends GetView<ReportPetController> {
               ),
               const SizedBox(height: 20),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                },
                 child: Text(
                   'Submit',
                   style: Theme.of(context).textTheme.headline6,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart' as l;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:pet_rescue/modules/report/report_pet_controller.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
@@ -17,16 +18,16 @@ class MyGoogleMap extends StatefulWidget {
 class _MyGoogleMapState extends State<MyGoogleMap> {
   late Position _currentPosition;
   // late String _currentAddress;
-  late GoogleMapController mapController;
 
-  late GoogleMapController _controller;
+  late GoogleMapController mapController;
+  Completer<GoogleMapController> _controller = new Completer();
   LatLng _initialCameraPosition = LatLng(10.762622, 106.660172);
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    // _getCurrentPosition();
+    _getCurrentPosition();
   }
 
   @override
@@ -78,7 +79,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
             backgroundColor: Theme.of(context).primaryColor,
             onPressed: () async {
               String address = "";
-              await _getCurrentPosition().then((value) => address = value);
+              await _getCurrentAddress().then((value) => address = value);
               final ReportPetController controller = Get.find();
               controller.locationController.text = address;
               Get.back();
@@ -89,7 +90,7 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
     );
   }
 
-  Future<String> _getCurrentPosition() async {
+  void _getCurrentPosition() async {
     bool serviceEnabled;
     LocationPermission permission;
 
@@ -123,18 +124,27 @@ class _MyGoogleMapState extends State<MyGoogleMap> {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    _currentPosition = await Geolocator.getCurrentPosition();
+    _currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    LatLng position =
+        LatLng(_currentPosition.latitude, _currentPosition.longitude);
+    CameraPosition cameraPosition =
+        new CameraPosition(target: position, zoom: 14);
+    mapController.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+  }
 
+  Future<String> _getCurrentAddress() async {
     List<Placemark> placemarks = await placemarkFromCoordinates(
         _currentPosition.latitude, _currentPosition.longitude);
     Placemark place = placemarks[0];
+    print(place);
 
-    return '${place.street}, ${place.locality}, ${place.postalCode}, ${place.country}';
+    return '${place.street}, ${place.thoroughfare}, ${place.subAdministrativeArea}, '
+        '${place.administrativeArea}, ${place.country}';
   }
 
   void _onMapCreated(GoogleMapController _cntlr) {
-    _controller = _cntlr;
-    // _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-    //     target: LatLng(_currentPosition.latitude, _currentPosition.latitude))));
+    _controller.complete(_cntlr);
+    mapController = _cntlr;
   }
 }
