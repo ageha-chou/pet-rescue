@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/data/tabs.dart';
+import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/tabs/adopted_pets_tab.dart';
 import 'package:pet_rescue/modules/home/tabs/home_tab.dart';
 import 'package:pet_rescue/modules/home/tabs/me_tab.dart';
@@ -8,12 +9,13 @@ import 'package:pet_rescue/modules/home/tabs/notifications_tab.dart';
 
 class MainController extends GetxController {
   var currentTab = MainTabs.home.obs;
-  var currentRole = Roles.guest;
 
   late HomeTab homeTab;
   late AdoptedPetsTab adoptedPetsTab;
   late NotificationsTab notificationsTab;
   late MeTab meTab;
+
+  late User user;
 
   @override
   void onInit() {
@@ -23,6 +25,13 @@ class MainController extends GetxController {
     adoptedPetsTab = AdoptedPetsTab();
     notificationsTab = NotificationsTab();
     meTab = MeTab();
+
+    user = User(
+      fullName: 'Nguyễn Xuân Mai Trinh',
+      password: '12345678',
+      phone: '0962227699',
+      role: Roles.adopter,
+    );
   }
 
   void onSwitchTab(int index) {
@@ -63,7 +72,7 @@ class MainController extends GetxController {
   }
 
   String get roleText {
-    switch (currentRole) {
+    switch (user.role) {
       case Roles.guest:
         return "Guest";
       case Roles.adopter:
