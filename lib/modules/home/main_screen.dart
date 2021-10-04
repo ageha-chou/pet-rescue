@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/data/tabs.dart';
+import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/shared.dart';
@@ -100,11 +101,12 @@ class MainScreen extends GetView<MainController> {
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  AppBar _buildAppBar(BuildContext context) {
+    User user = controller.user;
     return AppBar(
       backgroundColor: Theme.of(context).primaryColor,
       actions: [
-        if (controller.currentRole == Roles.guest)
+        if (user.role == Roles.guest)
           Row(
             children: [
               _buildAppBarTextButton(
@@ -118,7 +120,7 @@ class MainScreen extends GetView<MainController> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (controller.currentRole != Roles.guest)
+          if (user.role != Roles.guest)
             Row(
               children: [
                 CircleAvatar(
@@ -127,10 +129,8 @@ class MainScreen extends GetView<MainController> {
                 ),
                 SizedBox(width: 5),
                 Text(
-                  controller.roleText,
-                  style: TextStyle(
-                    fontSize: 16,
-                  ),
+                  user.fullName,
+                  style: Theme.of(context).textTheme.headline6,
                 ),
               ],
             ),
