@@ -1,8 +1,10 @@
 import 'dart:io';
 import 'dart:async';
 
+import 'package:dropdown_below/dropdown_below.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:images_picker/images_picker.dart';
@@ -37,107 +39,344 @@ class ReportPetScreen extends GetView<ReportPetController> {
           key: controller.reportForm,
           child: ListView(
             children: [
-              TextFormField(
-                style: Theme.of(context).textTheme.headline6,
-                decoration: InputDecoration(
-                  labelText: 'Full name',
-                  labelStyle: Theme.of(context).textTheme.headline6,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
-                    ),
+              Row(
+                children: [
+                  Text(
+                    'Emergency case:',
+                    style: Theme.of(context).textTheme.headline6,
                   ),
-                ),
-                textInputAction: TextInputAction.next,
-                controller: controller.fullNameController,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Full name is required';
-                  }
-                  return null;
-                },
+                  Obx(
+                    () => Checkbox(
+                        activeColor: Color(0xFF0A9396),
+                        value: controller.emergencyCase.value,
+                        onChanged: (value) {
+                          controller.emergencyCase.value = value!;
+                        }),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
-              InternationalPhoneNumberInput(
-                keyboardType: TextInputType.phone,
-                textStyle: Theme.of(context).textTheme.headline6,
-                selectorTextStyle: Theme.of(context).textTheme.headline6,
-                inputDecoration: InputDecoration(
-                  hintText: 'Phone',
-                  hintStyle: Theme.of(context).textTheme.headline6,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.user,
+                      color: ColorConstants.black,
+                    ),
+                    labelText: 'Full name',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.fullNameController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Full name is required';
+                    }
+                    return null;
+                  },
                 ),
-                textFieldController: controller.phoneController,
-                ignoreBlank: true,
-                countrySelectorScrollControlled: false,
-                countries: ['VN'],
-                formatInput: true,
-                // initialValue: PhoneNumber(isoCode: 'VN'),
-                selectorConfig: SelectorConfig(
-                  showFlags: true,
-                ),
-                onInputChanged: (phone) {},
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Phone number is required';
-                  }
-                },
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                style: Theme.of(context).textTheme.headline6,
-                decoration: InputDecoration(
-                  labelText: 'Description',
-                  labelStyle: Theme.of(context).textTheme.headline6,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.phone,
+                      color: ColorConstants.black,
+                    ),
+                    labelText: 'Phone',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.phoneController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Phone is required';
+                    }
+                    return null;
+                  },
                 ),
-                textInputAction: TextInputAction.next,
-                controller: controller.descriptionController,
-                minLines: 1,
-                maxLines: 5,
-                keyboardType: TextInputType.multiline,
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Description is required';
-                  }
-                  return null;
-                },
+              ),
+              // InternationalPhoneNumberInput(
+              //   keyboardType: TextInputType.phone,
+              //   textStyle: Theme.of(context).textTheme.headline6,
+              //   selectorTextStyle: Theme.of(context).textTheme.headline6,
+              //   inputDecoration: InputDecoration(
+              //     hintText: 'Phone',
+              //     hintStyle: Theme.of(context).textTheme.headline6,
+              //     enabledBorder: OutlineInputBorder(
+              //                       borderSide: BorderSide(color: ColorConstants.black),
+              //                       borderRadius: BorderRadius.circular(10),
+              //                     ),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: Color(0xFF0A9396)),
+              //       borderRadius: BorderRadius.circular(10),
+              //     ),
+              //   ),
+              //   textFieldController: controller.phoneController,
+              //   ignoreBlank: true,
+              //   countrySelectorScrollControlled: false,
+              //   countries: ['VN'],
+              //   formatInput: true,
+              //   // initialValue: PhoneNumber(isoCode: 'VN'),
+              //   selectorConfig: SelectorConfig(
+              //     showFlags: true,
+              //   ),
+              //   onInputChanged: (phone) {},
+              //   validator: (value) {
+              //     if (value!.isEmpty) {
+              //       return 'Phone number is required';
+              //     }
+              //   },
+              // ),
+              const SizedBox(height: 20),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.map,
+                      color: ColorConstants.black,
+                    ),
+                    labelText: 'Location',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    hintText: 'Tap to choose your location',
+                    hintStyle: Theme.of(context).textTheme.headline6,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.locationController,
+                  minLines: 1,
+                  maxLines: 3,
+                  readOnly: true,
+                  keyboardType: TextInputType.multiline,
+                  onTap: () => Get.to(() => MyGoogleMap()),
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Please choose your location';
+                    }
+                    return null;
+                  },
+                ),
               ),
               const SizedBox(height: 20),
-              TextFormField(
-                style: Theme.of(context).textTheme.headline6,
-                decoration: InputDecoration(
-                  labelText: 'Location',
-                  labelStyle: Theme.of(context).textTheme.headline6,
-                  hintText: 'Tap to choose your location',
-                  hintStyle: Theme.of(context).textTheme.headline6,
-                  focusedBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(
-                      color: Theme.of(context).primaryColor,
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    hoverColor: Colors.red,
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.paw,
+                      color: ColorConstants.black,
+                    ),
+                    labelText: 'Pet type',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    hintText: 'Cat, dog,...',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
                     ),
                   ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.petTypeController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Pet type is required';
+                    }
+                    return null;
+                  },
                 ),
-                textInputAction: TextInputAction.next,
-                controller: controller.locationController,
-                minLines: 1,
-                maxLines: 3,
-                readOnly: true,
-                keyboardType: TextInputType.multiline,
-                onTap: () => Get.to(() => MyGoogleMap()),
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please choose your location';
-                  }
-                  return null;
-                },
+              ),
+              const SizedBox(height: 20),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(
+                      FontAwesomeIcons.calculator,
+                      color: ColorConstants.black,
+                    ),
+                    labelText: 'Quantity',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    hintText: '1',
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.quantityController,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Quantity is required';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Obx(
+                () => DropdownBelow(
+                  itemWidth: 350,
+                  icon: Icon(Icons.arrow_drop_down),
+                  itemTextstyle: Theme.of(context).textTheme.headline6,
+                  boxTextstyle: Theme.of(context).textTheme.headline6,
+                  boxPadding: EdgeInsets.symmetric(horizontal: 14),
+                  boxHeight: 60,
+                  boxDecoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: ColorConstants.black),
+                  ),
+                  hint: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.weight,
+                        size: 25,
+                      ),
+                      const SizedBox(width: 10),
+                      Text('Choose Pet size'),
+                    ],
+                  ),
+                  items: controller.dropdownItems,
+                  value: controller.selectedSize.value == ""
+                      ? null
+                      : controller.selectedSize.value,
+                  onChanged: (value) {
+                    controller.selectedSize.value = value.toString();
+                  },
+                ),
+              ),
+
+              const SizedBox(height: 20),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(FontAwesomeIcons.notesMedical,
+                        color: ColorConstants.black),
+                    labelText: 'Health Condition',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.healthController,
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
+                  validator: (value) {
+                    if (value!.isEmpty) {
+                      return 'Health condition is required';
+                    }
+                    return null;
+                  },
+                ),
+              ),
+              const SizedBox(height: 20),
+              Theme(
+                data: Theme.of(context).copyWith(
+                  colorScheme: ThemeData().colorScheme.copyWith(
+                        primary: Color(0xFF0A9396),
+                      ),
+                ),
+                child: TextFormField(
+                  style: Theme.of(context).textTheme.headline6,
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(FontAwesomeIcons.stickyNote,
+                        color: ColorConstants.black),
+                    labelText: 'Note',
+                    labelStyle: Theme.of(context).textTheme.headline6,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: ColorConstants.black),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0A9396)),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  textInputAction: TextInputAction.next,
+                  controller: controller.noteController,
+                  minLines: 1,
+                  maxLines: 5,
+                  keyboardType: TextInputType.multiline,
+                  // validator: (value) {
+                  //   if (value!.isEmpty) {
+                  //     return 'Description is required';
+                  //   }
+                  //   return null;
+                  // },
+                ),
               ),
               const SizedBox(height: 20),
               Obx(
@@ -182,6 +421,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                         ],
                       )
                     : InkWell(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
                         onTap: () async {
                           getImage();
                         },
@@ -198,7 +438,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                               Icon(
                                 Icons.camera_alt,
                                 size: 50,
-                                color: Colors.grey,
+                                color: ColorConstants.black,
                               ),
                               Text(
                                 'Upload image',
@@ -215,10 +455,13 @@ class ReportPetScreen extends GetView<ReportPetController> {
                   Get.back();
                 },
                 child: Text(
-                  'Submit',
+                  'SUBMIT',
                   style: Theme.of(context).textTheme.headline6,
                 ),
                 style: ButtonStyle(
+                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  )),
                   backgroundColor:
                       MaterialStateProperty.all(Theme.of(context).primaryColor),
                 ),
@@ -239,7 +482,6 @@ class ReportPetScreen extends GetView<ReportPetController> {
       pickType: PickType.image,
       count: 5,
     ))!;
-    print(controller.imageFiles.length);
   }
 
   void _insertText(String myText, TextEditingController controller) {

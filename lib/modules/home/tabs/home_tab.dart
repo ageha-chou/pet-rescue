@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/data/roles.dart';
+import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
+import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
 
 class HomeTab extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
+    final User user = controller.user;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -16,6 +19,7 @@ class HomeTab extends GetView<MainController> {
               label: 'List Pets',
               imageUrl: 'assets/images/pet-list.png',
               ctx: context,
+              onTapHandler: () => Get.to(() => PetsListScreen()),
             ),
             _buildCard(
               label: 'Pet Diaries',
@@ -32,13 +36,13 @@ class HomeTab extends GetView<MainController> {
               imageUrl: 'assets/images/wish-list.png',
               ctx: context,
             ),
-            if (controller.currentRole == Roles.volunteer)
+            if (user.role == Roles.volunteer)
               _buildCard(
                 label: 'Pet Reports',
                 imageUrl: 'assets/images/report.png',
                 ctx: context,
               ),
-            if (controller.currentRole == Roles.adopter)
+            if (user.role == Roles.adopter)
               _buildCard(
                 label: 'Become a Volunteer',
                 imageUrl: 'assets/images/volunteer.png',
@@ -73,12 +77,16 @@ class HomeTab extends GetView<MainController> {
               elevation: 5,
               // color: Color.fromRGBO(252, 216, 212, 1),
               // color: Theme.of(ctx).accentColor,
-              child: Padding(
-                padding: EdgeInsets.all(20),
-                child: Image.asset(
-                  imageUrl,
-                  height: 60,
-                  color: Color.fromRGBO(117, 108, 97, 1),
+              child: InkWell(
+                borderRadius: BorderRadius.circular(15),
+                onTap: onTapHandler,
+                child: Padding(
+                  padding: EdgeInsets.all(20),
+                  child: Image.asset(
+                    imageUrl,
+                    height: 60,
+                    color: Color.fromRGBO(117, 108, 97, 1),
+                  ),
                 ),
               ),
             ),
