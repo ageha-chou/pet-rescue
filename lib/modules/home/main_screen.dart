@@ -74,8 +74,11 @@ class MainScreen extends GetView<MainController> {
               color: const Color.fromRGBO(255, 245, 238, 0.9),
               height: 45,
             ),
-            onPressed: () {
-              Get.toNamed(Routes.REPORT);
+            onPressed: () async {
+              var result = await Get.toNamed(Routes.REPORT);
+              if (result != null) {
+                Get.toNamed(Routes.ADOPTER_REPORT_LIST);
+              }
             },
           ),
         ),
