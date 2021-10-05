@@ -36,20 +36,26 @@ class HomeTab extends GetView<MainController> {
               imageUrl: 'assets/images/wish-list.png',
               ctx: context,
             ),
-            if (user.role == Roles.volunteer)
-              _buildCard(
-                label: 'Pet Reports',
-                imageUrl: 'assets/images/report.png',
-                ctx: context,
-              ),
-            if (user.role == Roles.adopter)
+            _buildCard(
+              label: user.role == Roles.volunteer
+                  ? 'Pet Reports'
+                  : 'Reported Pets',
+              imageUrl: 'assets/images/report.png',
+              ctx: context,
+            ),
+          ],
+        ),
+        if (user.role == Roles.adopter)
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
               _buildCard(
                 label: 'Become a Volunteer',
                 imageUrl: 'assets/images/volunteer.png',
                 ctx: context,
               ),
-          ],
-        ),
+            ],
+          ),
       ],
     );
   }
