@@ -29,7 +29,7 @@ class MainController extends GetxController {
     user = User(
       fullName: 'Nguyễn Xuân Mai Trinh',
       password: '12345678',
-      phone: '0962227699',
+      phone: '0123456798',
       role: Roles.adopter,
     );
   }

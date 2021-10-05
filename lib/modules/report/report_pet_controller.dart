@@ -10,14 +10,18 @@ class ReportPetController extends GetxController {
   final phoneController = TextEditingController();
   final petTypeController = TextEditingController();
   final quantityController = TextEditingController();
-  final healthController = TextEditingController();
   final noteController = TextEditingController();
   final locationController = TextEditingController();
+  final healthController = TextEditingController();
   var emergencyCase = false.obs;
   var imageFiles = [].obs;
   var selectedSize = "".obs;
+  var selectedType = "".obs;
+  var selectedHealth = "".obs;
 
-  List<DropdownMenuItem> dropdownItems = [];
+  List<DropdownMenuItem> dropdownSize = [];
+  List<DropdownMenuItem> dropdownType = [];
+  List<DropdownMenuItem> dropdownHealth = [];
 
   User user = Get.find<MainController>().user;
 
@@ -31,6 +35,15 @@ class ReportPetController extends GetxController {
     'More than 20kg'
   ];
 
+  List _listType = [
+    "Cat",
+    "Dog",
+    "Rabbit",
+    "squirrel",
+  ];
+
+  List _listHealth = ["Healthy", "Unconscious", "Injured", "Bleeding"];
+
   @override
   void onInit() {
     super.onInit();
@@ -38,17 +51,63 @@ class ReportPetController extends GetxController {
     fullNameController.text = user.fullName;
     phoneController.text = user.phone;
 
-    //load data to dropdownItems
+    //load data to dropdownSize
     for (String value in _listSize) {
-      dropdownItems.add(DropdownMenuItem(
+      dropdownSize.add(DropdownMenuItem(
         child: Row(
           children: [
             Icon(
               FontAwesomeIcons.weight,
+              color: Color(0xFFb5b0ac),
               size: 25,
             ),
             const SizedBox(width: 10),
-            Text(value),
+            Text(
+              value,
+              style: Theme.of(Get.context!).textTheme.headline6,
+            ),
+          ],
+        ),
+        value: value,
+      ));
+    }
+
+    //load data to dropdownType
+    for (String value in _listType) {
+      dropdownType.add(DropdownMenuItem(
+        child: Row(
+          children: [
+            Icon(
+              FontAwesomeIcons.paw,
+              color: Color(0xFFb5b0ac),
+              size: 25,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              value,
+              style: Theme.of(Get.context!).textTheme.headline6,
+            ),
+          ],
+        ),
+        value: value,
+      ));
+    }
+
+    //load data to dropdownHealth
+    for (String value in _listHealth) {
+      dropdownHealth.add(DropdownMenuItem(
+        child: Row(
+          children: [
+            Icon(
+              FontAwesomeIcons.notesMedical,
+              color: Color(0xFFb5b0ac),
+              size: 25,
+            ),
+            const SizedBox(width: 10),
+            Text(
+              value,
+              style: Theme.of(Get.context!).textTheme.headline6,
+            ),
           ],
         ),
         value: value,
@@ -58,5 +117,9 @@ class ReportPetController extends GetxController {
 
   onSelectSize(size) {
     selectedSize.value = size;
+  }
+
+  onSelectType(type) {
+    selectedType = type;
   }
 }
