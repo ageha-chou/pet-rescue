@@ -4,6 +4,7 @@ import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
+import 'package:pet_rescue/routes/app_pages.dart';
 
 class HomeTab extends GetView<MainController> {
   @override
@@ -36,13 +37,21 @@ class HomeTab extends GetView<MainController> {
               imageUrl: 'assets/images/wish-list.png',
               ctx: context,
             ),
-            _buildCard(
-              label: user.role == Roles.volunteer
-                  ? 'Pet Reports'
-                  : 'Reported Pets',
-              imageUrl: 'assets/images/report.png',
-              ctx: context,
-            ),
+            if (user.role == Roles.volunteer)
+              _buildCard(
+                label: 'Pet Reports',
+                imageUrl: 'assets/images/report.png',
+                ctx: context,
+              ),
+            if (user.role == Roles.adopter)
+              _buildCard(
+                label: 'Reported Pets',
+                imageUrl: 'assets/images/report.png',
+                ctx: context,
+                onTapHandler: () {
+                  Get.toNamed(Routes.ADOPTER_REPORT_LIST);
+                },
+              ),
           ],
         ),
         if (user.role == Roles.adopter)
