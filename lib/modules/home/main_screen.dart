@@ -43,7 +43,7 @@ class MainScreen extends GetView<MainController> {
                 onPressHandler: () {
                   controller.onSwitchTab(1);
                 }),
-            SizedBox(width: 55),
+            Spacer(),
             _buildNavButton(
                 label: 'Notifications',
                 index: 2,
