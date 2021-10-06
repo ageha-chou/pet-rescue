@@ -36,6 +36,17 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color.fromRGBO(19, 44, 51, 1),
               ),
+              headline5: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 13,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(19, 44, 51, 1),
+              ),
+              subtitle2: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 12,
+                color: Colors.blueGrey,
+              ),
             ),
         colorScheme: ColorScheme.fromSwatch().copyWith(
           secondary: Color.fromRGBO(165, 213, 213, 0.8),
