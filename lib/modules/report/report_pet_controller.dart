@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/models/report.dart';
 import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 
@@ -8,11 +9,9 @@ class ReportPetController extends GetxController {
   final GlobalKey<FormState> reportForm = GlobalKey();
   final fullNameController = TextEditingController();
   final phoneController = TextEditingController();
-  final petTypeController = TextEditingController();
   final quantityController = TextEditingController();
   final noteController = TextEditingController();
   final locationController = TextEditingController();
-  final healthController = TextEditingController();
   var emergencyCase = false.obs;
   var imageFiles = [].obs;
   var selectedSize = "".obs;
@@ -24,6 +23,8 @@ class ReportPetController extends GetxController {
   List<DropdownMenuItem> dropdownHealth = [];
 
   User user = Get.find<MainController>().user;
+
+  Report? report;
 
   List _listSize = [
     'Under 2kg',
@@ -50,6 +51,8 @@ class ReportPetController extends GetxController {
 
     fullNameController.text = user.fullName;
     phoneController.text = user.phone;
+
+    report = Get.arguments;
 
     //load data to dropdownSize
     for (String value in _listSize) {
@@ -115,11 +118,29 @@ class ReportPetController extends GetxController {
     }
   }
 
+  @override
+  onReady() {
+    if (report != null) {
+      selectedType.value = report!.petType;
+      selectedSize.value = report!.petSize;
+      quantityController.text = report!.quantity.toString();
+      noteController.text = report!.note;
+      locationController.text = report!.location;
+      selectedHealth.value = report!.healCondition;
+      imageFiles.value = report!.images;
+      emergencyCase.value = report!.emergencyCase;
+    }
+  }
+
   onSelectSize(size) {
     selectedSize.value = size;
   }
 
   onSelectType(type) {
-    selectedType = type;
+    selectedType.value = type;
+  }
+
+  onSelectHealth(health) {
+    selectedHealth.value = health;
   }
 }

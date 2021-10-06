@@ -50,6 +50,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                         activeColor: Color(0xFF0A9396),
                         value: controller.emergencyCase.value,
                         onChanged: (value) {
+                          if (controller.report != null) return null;
                           controller.emergencyCase.value = value!;
                         }),
                   ),
@@ -191,7 +192,10 @@ class ReportPetScreen extends GetView<ReportPetController> {
                   maxLines: 3,
                   readOnly: true,
                   keyboardType: TextInputType.multiline,
-                  onTap: () => Get.to(() => MyGoogleMap()),
+                  onTap: () {
+                    if (controller.report != null) return null;
+                    Get.to(() => MyGoogleMap());
+                  },
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please choose your location';
@@ -229,6 +233,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ? null
                       : controller.selectedType.value,
                   onChanged: (value) {
+                    if (controller.report != null) return null;
                     controller.selectedType.value = value.toString();
                   },
                 ),
@@ -241,6 +246,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ),
                 ),
                 child: TextFormField(
+                  readOnly: controller.report != null ? true : false,
                   style: Theme.of(context).textTheme.headline6,
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
@@ -299,6 +305,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ? null
                       : controller.selectedSize.value,
                   onChanged: (value) {
+                    if (controller.report != null) return null;
                     controller.selectedSize.value = value.toString();
                   },
                 ),
@@ -332,6 +339,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ? null
                       : controller.selectedHealth.value,
                   onChanged: (value) {
+                    if (controller.report != null) return null;
                     controller.selectedHealth.value = value.toString();
                   },
                 ),
@@ -344,6 +352,7 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ),
                 ),
                 child: TextFormField(
+                  readOnly: controller.report != null ? true : false,
                   style: Theme.of(context).textTheme.headline6,
                   decoration: InputDecoration(
                     prefixIcon: Icon(FontAwesomeIcons.stickyNote,
@@ -397,21 +406,24 @@ class ReportPetScreen extends GetView<ReportPetController> {
                                     margin: const EdgeInsets.symmetric(
                                         horizontal: 10),
                                     width: 100,
-                                    child: Image.file(
-                                        File(controller.imageFiles[i].path),
-                                        fit: BoxFit.cover),
+                                    child: controller.report == null
+                                        ? Image.file(
+                                            File(controller.imageFiles[i].path),
+                                            fit: BoxFit.cover)
+                                        : controller.imageFiles[i],
                                   );
                                 }),
                           ),
-                          Positioned(
-                            right: 0,
-                            top: -7,
-                            child: IconButton(
-                                onPressed: () {
-                                  controller.imageFiles.clear();
-                                },
-                                icon: Icon(Icons.clear)),
-                          ),
+                          if (controller.report == null)
+                            Positioned(
+                              right: 0,
+                              top: -7,
+                              child: IconButton(
+                                  onPressed: () {
+                                    controller.imageFiles.clear();
+                                  },
+                                  icon: Icon(Icons.clear)),
+                            ),
                         ],
                       )
                     : InkWell(
@@ -444,22 +456,23 @@ class ReportPetScreen extends GetView<ReportPetController> {
                       ),
               ),
               const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Get.back(result: true);
-                },
-                child: Text(
-                  'SUBMIT',
-                  style: Theme.of(context).textTheme.headline6,
+              if (controller.report == null)
+                ElevatedButton(
+                  onPressed: () {
+                    Get.back(result: true);
+                  },
+                  child: Text(
+                    'SUBMIT',
+                    style: Theme.of(context).textTheme.headline6,
+                  ),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    )),
+                    backgroundColor: MaterialStateProperty.all(
+                        Theme.of(context).primaryColor),
+                  ),
                 ),
-                style: ButtonStyle(
-                  shape: MaterialStateProperty.all(RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  )),
-                  backgroundColor:
-                      MaterialStateProperty.all(Theme.of(context).primaryColor),
-                ),
-              ),
             ],
           ),
         ),
