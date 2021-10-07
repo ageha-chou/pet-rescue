@@ -132,7 +132,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                 children: [
                   Flexible(
                     child: Text(
-                      'Please press \'Give to Volunteer\' when volunteer_report picks '
+                      'Please press \'Give to Volunteer\' when volunteer picks '
                       'these pets up',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
