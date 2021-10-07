@@ -4,6 +4,7 @@ import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
+import 'package:pet_rescue/modules/volunteer_report/petreport_screens.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 
 class HomeTab extends GetView<MainController> {
@@ -42,6 +43,7 @@ class HomeTab extends GetView<MainController> {
                 label: 'Pet Reports',
                 imageUrl: 'assets/images/report.png',
                 ctx: context,
+                  onTapHandler: () => Get.to(() => PetReport()),
               ),
             if (user.role == Roles.adopter)
               _buildCard(
