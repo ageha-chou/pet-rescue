@@ -12,4 +12,10 @@ class User {
     required this.fullName,
     required this.role,
   });
+
+  String get username {
+    List<String> nameParts = fullName.split(" ");
+    int length = nameParts.length;
+    return nameParts[length - 2] + " " + nameParts[length - 1];
+  }
 }

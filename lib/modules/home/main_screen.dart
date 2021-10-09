@@ -63,11 +63,12 @@ class MainScreen extends GetView<MainController> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: Container(
-        height: 70,
-        width: 70,
+        height: 75,
+        width: 75,
         child: FittedBox(
           child: FloatingActionButton(
-            elevation: 4,
+            elevation: 5,
+            splashColor: Colors.red,
             backgroundColor: const Color.fromRGBO(210, 88, 88, 0.8),
             child: Image.asset(
               'assets/images/sos.png',
@@ -132,7 +133,7 @@ class MainScreen extends GetView<MainController> {
                 ),
                 SizedBox(width: 5),
                 Text(
-                  user.fullName,
+                  user.username,
                   style: Theme.of(context).textTheme.headline6,
                 ),
               ],

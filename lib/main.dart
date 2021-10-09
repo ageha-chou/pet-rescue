@@ -22,6 +22,10 @@ class MyApp extends StatelessWidget {
         primaryColor: Color.fromRGBO(165, 213, 213, 1),
         backgroundColor: Color.fromRGBO(253, 246, 240, 1),
         appBarTheme: AppBarTheme(
+          backgroundColor: Color.fromRGBO(165, 213, 213, 1),
+          iconTheme: IconThemeData(
+            color: Colors.black, //change your color here
+          ),
           titleTextStyle: TextStyle(
             fontFamily: 'Nunito',
             fontSize: 18,

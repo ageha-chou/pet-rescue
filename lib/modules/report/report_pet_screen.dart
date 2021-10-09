@@ -29,7 +29,10 @@ class ReportPetScreen extends GetView<ReportPetController> {
         actions: [
           IconButton(
             onPressed: () => Get.back(),
-            icon: Icon(Icons.clear),
+            icon: Icon(
+              Icons.clear,
+              color: Colors.black,
+            ),
           ),
         ],
       ),
