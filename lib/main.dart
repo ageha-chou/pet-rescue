@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 
-import 'modules/home/main_screen.dart';
-
-void main() {
+Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "assets/.env");
   SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown])
       .then((_) => runApp(MyApp()));

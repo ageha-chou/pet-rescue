@@ -4,6 +4,7 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
@@ -18,13 +19,13 @@ class VolunteerRoute extends StatefulWidget {
 class _VolunteerRouteState extends State<VolunteerRoute> {
   final controller = Get.find<AdopterReportController>();
   final LatLng _currentLat = LatLng(10.782470184547625, 106.6790621573682);
-  final LatLng _volunteerLat = LatLng(10.785324172895079, 106.67397135051291);
+  final LatLng _volunteerLat = LatLng(10.786496594215222, 106.67168185806077);
   late final GoogleMapController _controller;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
-  String googleApiKey = 'AIzaSyBdH7_6AS6FALsk5dZTkGSGo81p5D_p7sc';
+  String googleApiKey = dotenv.env['GG_API_KEY']!;
 
   @override
   void initState() {
@@ -153,7 +154,7 @@ class _VolunteerRouteState extends State<VolunteerRoute> {
       travelMode: TravelMode.driving,
       // wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")],
     );
-    
+
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
