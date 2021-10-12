@@ -11,7 +11,15 @@ class ConfirmingPickingPet extends StatelessWidget {
   Widget build(BuildContext context) {
     return  Container(
       child: Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text( "Pet Report ",
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+              )
+          ),
+        ),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,

@@ -13,7 +13,7 @@ class PetDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+        backgroundColor: Color.fromRGBO(253, 246, 240, 1),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         brightness: Brightness.light,
@@ -212,7 +212,7 @@ class PetDetail extends StatelessWidget {
                           color: Colors.blue[300],
                         ),
                         child: Text(
-                          "Contact Me",
+                          "Adopt me",
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,

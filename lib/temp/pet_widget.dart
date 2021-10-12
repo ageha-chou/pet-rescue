@@ -26,9 +26,11 @@ class PetWidget extends StatelessWidget {
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(20),
             topRight: Radius.circular(20),
+            bottomLeft: Radius.circular(20),
+            bottomRight: Radius.circular(20)
           ),
           border: Border.all(
-            color: Colors.grey.shade200,
+            color: Colors.grey.shade500,
             width: 1,
           ),
         ),
