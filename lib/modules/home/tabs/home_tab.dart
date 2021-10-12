@@ -6,7 +6,6 @@ import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
 import 'package:pet_rescue/modules/volunteer_report/pet_report_screens.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
-import 'package:pet_rescue/modules/volunteer_report/petreport_screens.dart';
 import 'package:pet_rescue/temp/principal.dart';
 
 class HomeTab extends GetView<MainController> {
@@ -29,6 +28,7 @@ class HomeTab extends GetView<MainController> {
               label: 'Pet Diaries',
               imageUrl: 'assets/images/pet-diary.png',
               ctx: context,
+              onTapHandler: () => Get.toNamed(Routes.PET_DIARY),
             ),
           ],
         ),
@@ -58,17 +58,17 @@ class HomeTab extends GetView<MainController> {
               ),
           ],
         ),
-        if (user.role == Roles.adopter)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildCard(
-                label: 'Become a Volunteer',
-                imageUrl: 'assets/images/volunteer.png',
-                ctx: context,
-              ),
-            ],
-          ),
+        // if (user.role == Roles.adopter)
+        //   Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       _buildCard(
+        //         label: 'Become a Volunteer',
+        //         imageUrl: 'assets/images/volunteer.png',
+        //         ctx: context,
+        //       ),
+        //     ],
+        //   ),
       ],
     );
   }

@@ -46,6 +46,12 @@ class MyApp extends StatelessWidget {
                 fontWeight: FontWeight.bold,
                 color: Color.fromRGBO(19, 44, 51, 1),
               ),
+              headline4: TextStyle(
+                fontFamily: 'Nunito',
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Color.fromRGBO(19, 44, 51, 1),
+              ),
               subtitle2: TextStyle(
                 fontFamily: 'Nunito',
                 fontSize: 12,
