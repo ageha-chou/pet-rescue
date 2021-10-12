@@ -7,6 +7,7 @@ import 'package:pet_rescue/modules/pet_diary/pet_diary_screen.dart';
 import 'package:pet_rescue/modules/report/report_pet_binding.dart';
 import 'package:pet_rescue/modules/report/report_pet_screen.dart';
 
+
 part 'app_routes.dart';
 
 class AppPages {

@@ -18,23 +18,28 @@ class _PrincipalState extends State<Principal> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        brightness: Brightness.light,
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        leading: Icon(
-          Icons.sort,
+      brightness: Brightness.light,
+      backgroundColor: Colors.transparent,
+      elevation: 0,
+      leading: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Icon(
+          Icons.arrow_back,
           color: Colors.grey[800],
         ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: Icon(
-              Icons.notifications_none,
-              color: Colors.grey[800],
-            ),
-          ),
-        ],
       ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.only(right: 16),
+          child: Icon(
+            Icons.more_horiz,
+            color: Colors.grey[800],
+          ),
+        ),
+      ],
+    ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -44,21 +49,10 @@ class _PrincipalState extends State<Principal> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Find Your",
+                "Pet Adoption ",
                 style: TextStyle(
                   color: Colors.black,
                   fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-              child: Text(
-                "Lovely pet in anywhere",
-                style: TextStyle(
-                  color: Colors.grey[800],
                   fontSize: 24,
                 ),
               ),
@@ -123,14 +117,7 @@ class _PrincipalState extends State<Principal> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      buildPetCategory(Category.HAMSTER, "56", Colors.orange.shade300),
                       buildPetCategory(Category.CAT, "210", Colors.blue.shade200),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      buildPetCategory(Category.BUNNY, "90", Colors.green.shade200),
                       buildPetCategory(Category.DOG, "340", Colors.red.shade200),
                     ],
                   ),
@@ -170,45 +157,6 @@ class _PrincipalState extends State<Principal> {
                 children: buildNewestPet(),
               ),
             ),
-
-            Padding(
-              padding: EdgeInsets.only(right: 16, left: 16, bottom: 16),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                  Text(
-                    "Vets Near You",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.grey[800],
-                    ),
-                  ),
-
-                  Icon(
-                    Icons.more_horiz,
-                    color: Colors.grey[800],
-                  ),
-
-                ],
-              ),
-            ),
-
-            Container(
-              height: 130,
-              margin: EdgeInsets.only(bottom: 16),
-              child: PageView(
-                physics: BouncingScrollPhysics(),
-                children: [
-                  buildVet("assets/images/vets/vet_0.png", "Animal Emergency Hospital", "(369) 133-8956"),
-                  buildVet("assets/images/vets/vet_1.png", "Artemis Veterinary Center", "(706) 722-9159"),
-                  buildVet("assets/images/vets/vet_2.png", "Big Lake Vet Hospital", "(598) 4986-9532"),
-                  buildVet("assets/images/vets/vet_3.png", "Veterinary Medical Center", "(33) 8974-559-555"),
-                ],
-              ),
-            ),
-
           ],
         ),
       ),

@@ -65,15 +65,6 @@ class PetWidget extends StatelessWidget {
                       child: Container(
                         height: 30,
                         width: 30,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: pet.favorite ? Colors.red[400] : Colors.white,
-                        ),
-                        child: Icon(
-                          Icons.favorite,
-                          size: 16,
-                          color: pet.favorite ? Colors.white : Colors.grey[300],
-                        ),
                       ),
                     ),
                   ),
@@ -121,43 +112,6 @@ class PetWidget extends StatelessWidget {
 
                   SizedBox(
                     height: 8,
-                  ),
-
-                  Row(
-                    children: [
-
-                      Icon(
-                        Icons.location_on,
-                        color: Colors.grey[600],
-                        size: 18,
-                      ),
-
-                      SizedBox(
-                        width: 4,
-                      ),
-
-                      Text(
-                        pet.location,
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                        ),
-                      ),
-
-                      SizedBox(
-                        width: 4,
-                      ),
-
-                      Text(
-                        "(" + pet.distance + "km)",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-
-                    ],
                   ),
 
                 ],
