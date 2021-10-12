@@ -12,13 +12,14 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
         title: Text('Reported Pets'),
       ),
       body: Obx(
         () => Column(
           children: [
             IconStepper(
-              activeStepColor: Color(0xFF80D148),
+              activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
               icons: [
                 Icon(
                   FontAwesomeIcons.clock,
@@ -70,25 +71,6 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                 petType: controller.report.petType,
                 quantity: controller.report.quantity.toString(),
                 healthCondition: controller.report.healCondition,
-                volunteer: Row(
-                  children: [
-                    Flexible(
-                      child: Text(
-                        'Volunteer:',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    AnimatedTextKit(
-                      animatedTexts: [
-                        WavyAnimatedText('Finding...'),
-                      ],
-                      repeatForever: true,
-                    ),
-                  ],
-                ),
               ),
             ],
           ),
@@ -102,32 +84,8 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
               petType: controller.report.petType,
               quantity: controller.report.quantity.toString(),
               healthCondition: controller.report.healCondition,
-              volunteer: Row(
-                children: [
-                  CircleAvatar(
-                    child: Icon(Icons.person),
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Volunteer name',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Text(
-                        '2km away',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+              volunteer: _buildVolunteer(context,
+                  volunteerName: 'Volunteer Name', subTitle: '2km away'),
               acceptWidget: Row(
                 children: [
                   Flexible(
@@ -170,31 +128,10 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
               petType: controller.report.petType,
               quantity: controller.report.quantity.toString(),
               healthCondition: controller.report.healCondition,
-              volunteer: Row(
-                children: [
-                  CircleAvatar(
-                    child: Icon(Icons.person),
-                    backgroundColor: Theme.of(context).primaryColor,
-                  ),
-                  const SizedBox(width: 10),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Volunteer name',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.headline6,
-                      ),
-                      Text(
-                        '2km to the pet center',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                    ],
-                  ),
-                ],
+              volunteer: _buildVolunteer(
+                context,
+                volunteerName: 'Volunteer Name',
+                subTitle: '2km to go to the Center',
               ),
               acceptWidget: Row(
                 children: [
@@ -238,7 +175,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
       required String petType,
       required String quantity,
       required String healthCondition,
-      required Widget volunteer,
+      Widget? volunteer,
       Widget? acceptWidget}) {
     return InkWell(
       onTap: () {
@@ -252,42 +189,24 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
         child: Padding(
           padding: EdgeInsets.all(15.0),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.location_pin,
-                    size: 22,
-                  ),
-                  const SizedBox(width: 10),
-                  Flexible(
-                    child: Text(
-                      location,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.headline6,
-                    ),
-                  ),
+                  if (volunteer == null) ...[
+                    const SizedBox(height: 8),
+                    ..._buildLocation(context, location),
+                    _buildPopupMenu(),
+                  ],
                   // Spacer(),
-                  PopupMenuButton(
-                    child: Container(
-                      height: 20,
-                      margin: EdgeInsets.only(
-                        left: 5,
-                      ),
-                      child: AspectRatio(
-                        aspectRatio: 1 / 1,
-                        child: Image.asset('assets/images/kebab_menu.png'),
-                      ),
-                    ),
-                    itemBuilder: (ctx) => [
-                      const PopupMenuItem(
-                        child: Text('Cancel'),
-                      ),
-                    ],
-                  ),
                 ],
               ),
+              if (volunteer != null) volunteer,
+              Divider(),
+              if (volunteer != null)
+                Row(
+                  children: _buildLocation(context, location),
+                ),
               const SizedBox(height: 8),
               Row(
                 children: [
@@ -309,7 +228,8 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                     FontAwesomeIcons.calculator,
                     size: 22,
                   ),
-                  const SizedBox(width: 10),
+                  const SizedBox(width: 5),
+                  const SizedBox(width: 5),
                   Flexible(
                     child: Text(
                       quantity,
@@ -363,8 +283,28 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                     ),
                 ],
               ),
-              Divider(),
-              volunteer,
+              if (volunteer == null) ...[
+                Divider(),
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        'Volunteer:',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.headline6,
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    AnimatedTextKit(
+                      animatedTexts: [
+                        WavyAnimatedText('Finding...'),
+                      ],
+                      repeatForever: true,
+                    ),
+                  ],
+                ),
+              ],
               if (acceptWidget != null) ...[
                 Divider(),
                 acceptWidget,
@@ -374,5 +314,75 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
         ),
       ),
     );
+  }
+
+  Widget _buildVolunteer(BuildContext context,
+      {required volunteerName, required subTitle}) {
+    return Row(
+      children: [
+        CircleAvatar(
+          child: Icon(Icons.person),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+        const SizedBox(width: 10),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              volunteerName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            Text(
+              subTitle,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: Theme.of(context).textTheme.subtitle2,
+            ),
+          ],
+        ),
+        Spacer(),
+        _buildPopupMenu(),
+      ],
+    );
+  }
+
+  Widget _buildPopupMenu() {
+    return PopupMenuButton(
+      child: Container(
+        height: 20,
+        margin: EdgeInsets.only(
+          left: 5,
+        ),
+        child: AspectRatio(
+          aspectRatio: 1 / 1,
+          child: Image.asset('assets/images/kebab_menu.png'),
+        ),
+      ),
+      itemBuilder: (ctx) => [
+        const PopupMenuItem(
+          child: Text('Cancel'),
+        ),
+      ],
+    );
+  }
+
+  List<Widget> _buildLocation(BuildContext context, String location) {
+    return [
+      Icon(
+        Icons.location_pin,
+        size: 22,
+      ),
+      const SizedBox(width: 10),
+      Flexible(
+        child: Text(
+          location,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
+    ];
   }
 }

@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:pet_rescue/modules/volunteer_report/pet_confrim_screen.dart';
+import 'package:pet_rescue/modules/volunteer_report/pet_confirm_screen.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 class WaitingPetScreen extends StatefulWidget {
@@ -20,12 +20,11 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
     super.initState();
     Timer(Duration(seconds: 3), () {
       _isButtonDisabled = true;
-
     });
   }
 
   @override
-  Widget build(BuildContext context)  {
+  Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
         appBar: AppBar(),
@@ -36,9 +35,9 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
             children: [
               //logo here
               Icon(
-                  Icons.add_location_sharp,
-                  size: 12 * 12,
-                  color: ColorConstants.otherRed,
+                Icons.add_location_sharp,
+                size: 12 * 12,
+                color: ColorConstants.otherRed,
               ),
               SizedBox(height: 20),
               CircularProgressIndicator(
@@ -48,10 +47,10 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
                 height: 20,
               ),
               Text(
-                  'The Pet is waiting...',
-                  style: TextStyle(
-                    fontStyle: FontStyle.italic,
-                  ),
+                'The Pet is waiting...',
+                style: TextStyle(
+                  fontStyle: FontStyle.italic,
+                ),
               ),
               const SizedBox(
                 height: 20,
@@ -100,9 +99,7 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
   }
 }
 
-
 class Button extends StatelessWidget {
-
   // final ElevatedButton editButton;
 
   // Button(this.editButton);
@@ -125,6 +122,3 @@ class Button extends StatelessWidget {
     );
   }
 }
-
-
-
