@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
+import 'package:pet_rescue/shared/constants/color.dart';
 
 class AdopterReportScreen extends GetView<AdopterReportController> {
   @override
@@ -137,7 +138,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                 children: [
                   Flexible(
                     child: Text(
-                      'Please give feedback to our volunteer_report ',
+                      'Please give feedback to our volunteer report ',
                       maxLines: 3,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.subtitle2,
@@ -201,8 +202,10 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                   // Spacer(),
                 ],
               ),
-              if (volunteer != null) volunteer,
-              Divider(),
+              if (volunteer != null) ...[
+                volunteer,
+                Divider(),
+              ],
               if (volunteer != null)
                 Row(
                   children: _buildLocation(context, location),
@@ -213,6 +216,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                   Icon(
                     FontAwesomeIcons.paw,
                     size: 22,
+                    color: ColorConstants.red,
                   ),
                   const SizedBox(width: 10),
                   Flexible(
@@ -227,6 +231,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                   Icon(
                     FontAwesomeIcons.calculator,
                     size: 22,
+                    color: ColorConstants.red,
                   ),
                   const SizedBox(width: 5),
                   const SizedBox(width: 5),
@@ -246,6 +251,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                   Icon(
                     FontAwesomeIcons.notesMedical,
                     size: 22,
+                    color: ColorConstants.red,
                   ),
                   const SizedBox(width: 10),
                   Flexible(
@@ -321,8 +327,10 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
     return Row(
       children: [
         CircleAvatar(
-          child: Icon(Icons.person),
-          backgroundColor: Theme.of(context).primaryColor,
+          // child: Icon(Icons.person),
+          backgroundImage: NetworkImage(
+              'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200'),
+          // backgroundColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(width: 10),
         Column(
@@ -332,7 +340,9 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
               volunteerName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: Theme.of(context).textTheme.headline6,
+              style: Theme.of(context).textTheme.headline6!.copyWith(
+                    color: ColorConstants.red,
+                  ),
             ),
             Text(
               subTitle,
@@ -373,6 +383,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
       Icon(
         Icons.location_pin,
         size: 22,
+        color: ColorConstants.red,
       ),
       const SizedBox(width: 10),
       Flexible(

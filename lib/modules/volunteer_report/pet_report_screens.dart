@@ -7,7 +7,10 @@ class PetReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Pet report'),
+        backgroundColor: Theme.of(context).primaryColor,
+      ),
       body: ListView(
         padding: EdgeInsets.all(20),
         children: [

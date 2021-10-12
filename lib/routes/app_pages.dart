@@ -3,6 +3,7 @@ import 'package:pet_rescue/modules/adopter_report/adopter_report_biding.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_screen.dart';
 import 'package:pet_rescue/modules/home/main_binding.dart';
 import 'package:pet_rescue/modules/home/main_screen.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_screen.dart';
 import 'package:pet_rescue/modules/report/report_pet_binding.dart';
 import 'package:pet_rescue/modules/report/report_pet_screen.dart';
 
@@ -27,6 +28,10 @@ class AppPages {
       name: Routes.ADOPTER_REPORT_LIST,
       page: () => AdopterReportScreen(),
       binding: AdopterReportBinding(),
+    ),
+    GetPage(
+      name: Routes.PET_DIARY,
+      page: () => PetDiaryScreen(),
     ),
   ];
 }
