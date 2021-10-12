@@ -4,8 +4,9 @@ import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
-import 'package:pet_rescue/modules/volunteer_report/petreport_screens.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
+import 'package:pet_rescue/modules/volunteer_report/petreport_screens.dart';
+import 'package:pet_rescue/temp/principal.dart';
 
 class HomeTab extends GetView<MainController> {
   @override
@@ -21,7 +22,7 @@ class HomeTab extends GetView<MainController> {
               label: 'List Pets',
               imageUrl: 'assets/images/pet-list.png',
               ctx: context,
-              onTapHandler: () => Get.to(() => PetsListScreen()),
+              onTapHandler: () => Get.to(() => Principal()),
             ),
             _buildCard(
               label: 'Pet Diaries',

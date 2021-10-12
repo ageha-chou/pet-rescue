@@ -65,9 +65,11 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
               padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
             ),
             child: Text('Confirm'),
-            onPressed: () => {
-              Get.to(() => ConfirmingPickingPet())
-            },
+            onPressed: () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => ConfirmingPickingPet()),
+                  (Route<dynamic> route) => false,
+            ) ,
           ),
             ],
           ),
@@ -115,7 +117,11 @@ class Button extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
       ),
       child: Text('Confirm'),
-      onPressed: () => Get.to(() => ConfirmingPickingPet())
+      onPressed: () => Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => WaitingPetScreen()),
+            (Route<dynamic> route) => false,
+      ),
     );
   }
 }

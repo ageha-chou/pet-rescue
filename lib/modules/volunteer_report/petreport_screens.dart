@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/modules/volunteer_report/pet_waiting_screen.dart';
 
-import 'package:pet_rescue/shared/constants/color.dart';
 
 class PetReport extends StatelessWidget {
   @override
@@ -76,7 +75,8 @@ Widget _buildNotificationCard(
           TextButton(
               style: ButtonStyle(),
               child: const Text('Accept', style: TextStyle(fontSize: 18.0)),
-              onPressed: () => Get.to(() => WaitingPetScreen())),
+              onPressed: () => Get.to(() => WaitingPetScreen()),
+            ),
           const Divider(
             thickness: 2,
           ),
@@ -112,7 +112,12 @@ Widget _buildNotificationCard(
               TextButton(
                   style: ButtonStyle(),
                   child: const Text('ACCEPT'),
-                  onPressed: () => Get.to(() => WaitingPetScreen())),
+                  onPressed: () => Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => WaitingPetScreen()),
+                        (Route<dynamic> route) => false,
+                  ),
+              ),
               const SizedBox(width: 8),
               TextButton(
                 child: const Text('DECLINE'),
