@@ -6,6 +6,8 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def ggApiKey = localProperties.getProperty('google.apiKey')
+
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -39,6 +41,7 @@ android {
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+        manifestPlaceholders = [ggApiKey: ggApiKey]
     }
 
     buildTypes {
