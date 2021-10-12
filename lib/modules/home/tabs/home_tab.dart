@@ -27,6 +27,7 @@ class HomeTab extends GetView<MainController> {
               label: 'Pet Diaries',
               imageUrl: 'assets/images/pet-diary.png',
               ctx: context,
+              onTapHandler: () => Get.toNamed(Routes.PET_DIARY),
             ),
           ],
         ),
@@ -56,17 +57,17 @@ class HomeTab extends GetView<MainController> {
               ),
           ],
         ),
-        if (user.role == Roles.adopter)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              _buildCard(
-                label: 'Become a Volunteer',
-                imageUrl: 'assets/images/volunteer.png',
-                ctx: context,
-              ),
-            ],
-          ),
+        // if (user.role == Roles.adopter)
+        //   Row(
+        //     mainAxisAlignment: MainAxisAlignment.center,
+        //     children: [
+        //       _buildCard(
+        //         label: 'Become a Volunteer',
+        //         imageUrl: 'assets/images/volunteer.png',
+        //         ctx: context,
+        //       ),
+        //     ],
+        //   ),
       ],
     );
   }
