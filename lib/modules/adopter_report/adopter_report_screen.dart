@@ -68,6 +68,8 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
             children: [
               _buildCard(
                 context,
+                onTapHandler: () =>
+                    Get.toNamed(Routes.REPORT, arguments: controller.report),
                 location: controller.report.location,
                 petType: controller.report.petType,
                 quantity: controller.report.quantity.toString(),
@@ -81,6 +83,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
           children: [
             _buildCard(
               context,
+              onTapHandler: () => Get.toNamed(Routes.VOLUNTEER_ROUTE),
               location: controller.report.location,
               petType: controller.report.petType,
               quantity: controller.report.quantity.toString(),
@@ -106,12 +109,15 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                       onPressed: () {
                         controller.currentStep++;
                       },
-                      child: Text('Give to Volunteer'),
+                      child: Text(
+                        'Give to Volunteer',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor),
-                        foregroundColor: MaterialStateProperty.all(
-                            Theme.of(context).textTheme.headline6!.color),
+                        backgroundColor:
+                            MaterialStateProperty.all(ColorConstants.red),
                       ),
                     ),
                   ),
@@ -152,12 +158,15 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                       onPressed: () {
                         controller.currentStep++;
                       },
-                      child: Text('Feedback'),
+                      child: Text(
+                        'Feedback',
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              color: Colors.white,
+                            ),
+                      ),
                       style: ButtonStyle(
-                        backgroundColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor),
-                        foregroundColor: MaterialStateProperty.all(
-                            Theme.of(context).textTheme.headline6!.color),
+                        backgroundColor:
+                            MaterialStateProperty.all(ColorConstants.red),
                       ),
                     ),
                   ),
@@ -177,11 +186,10 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
       required String quantity,
       required String healthCondition,
       Widget? volunteer,
-      Widget? acceptWidget}) {
+      Widget? acceptWidget,
+      VoidCallback? onTapHandler}) {
     return InkWell(
-      onTap: () {
-        Get.toNamed(Routes.REPORT, arguments: controller.report);
-      },
+      onTap: onTapHandler,
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
