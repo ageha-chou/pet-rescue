@@ -55,17 +55,21 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
               const SizedBox(
                 height: 20,
               ),
-              ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 10,
-                  shape: StadiumBorder(),
-                  primary: ColorConstants.otherRed,
-                  onPrimary: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-                ),
-                child: Text('Confirm'),
-                onPressed: () => {Get.to(() => ConfirmingPickingPet())},
-              ),
+             ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              elevation: 10,
+              shape: StadiumBorder(),
+              primary: ColorConstants.otherRed,
+              onPrimary: Colors.white,
+              padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+            ),
+            child: Text('Confirm'),
+            onPressed: () => Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => ConfirmingPickingPet()),
+                  (Route<dynamic> route) => false,
+            ) ,
+          ),
             ],
           ),
         ),
@@ -102,14 +106,19 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          elevation: 10,
-          shape: StadiumBorder(),
-          primary: ColorConstants.otherRed,
-          onPrimary: Colors.white,
-          padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
-        ),
-        child: Text('Confirm'),
-        onPressed: () => Get.to(() => ConfirmingPickingPet()));
+      style: ElevatedButton.styleFrom(
+        elevation: 10,
+        shape: StadiumBorder(),
+        primary: ColorConstants.otherRed,
+        onPrimary: Colors.white,
+        padding: EdgeInsets.symmetric(horizontal: 32, vertical: 12),
+      ),
+      child: Text('Confirm'),
+      onPressed: () => Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => WaitingPetScreen()),
+            (Route<dynamic> route) => false,
+      ),
+    );
   }
 }

@@ -31,7 +31,7 @@ class MainController extends GetxController {
       password: '12345678',
       phone: '0123456798',
       // role: Roles.adopter,
-      role: Roles.adopter,
+      role: Roles.volunteer,
     );
   }
 

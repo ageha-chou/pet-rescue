@@ -45,7 +45,6 @@ class PetDetail extends StatelessWidget {
           Expanded(
             child: Stack(
               children: [
-
                 Hero(
                   tag: pet.imageUrl,
                   child: Container(
@@ -94,59 +93,12 @@ class PetDetail extends StatelessWidget {
                           SizedBox(
                             height: 8,
                           ),
-
-                          Row(
-                            children: [
-
-                              Icon(
-                                Icons.location_on,
-                                color: Colors.grey[600],
-                                size: 20,
-                              ),
-
-                              SizedBox(
-                                width: 4,
-                              ),
-
-                              Text(
-                                pet.location,
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                ),
-                              ),
-
-                              SizedBox(
-                                width: 4,
-                              ),
-
-                              Text(
-                                "(" + pet.distance + "km)",
-                                style: TextStyle(
-                                  color: Colors.grey[600],
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-
-                            ],
-                          ),
-
                         ],
                       ),
 
                       Container(
                         height: 50,
                         width: 50,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: pet.favorite ? Colors.red[400] : Colors.white,
-                        ),
-                        child: Icon(
-                          Icons.favorite,
-                          size: 24,
-                          color: pet.favorite ? Colors.white : Colors.grey[300],
-                        ),
                       ),
 
                     ],

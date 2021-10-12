@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/home/main_screen.dart';
+import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 class ConfirmingPickingPet extends StatelessWidget {
@@ -46,7 +48,8 @@ class ConfirmingPickingPet extends StatelessWidget {
                 ),
                 child: Text('Back'),
                 onPressed: () => {
-                  Get.to(() => MainScreen())
+                  //Back to main page
+                Navigator.of(context).pushNamedAndRemoveUntil(Routes.HOME, (Route<dynamic> route) => false)
                 },
               ),
             ],
