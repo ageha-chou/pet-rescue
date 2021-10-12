@@ -21,7 +21,7 @@ class CategoryList extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         title: Text(
-          (category == Category.HAMSTER ? "Hamster" : category == Category.CAT ? "Cat" : category == Category.BUNNY ? "Bunny" : "Dog") + " Category",
+          (category ==  Category.CAT ? "Cat" : category == Category.BUNNY ? "Bunny" : "Dog") + " Category",
           style: TextStyle(
             color: Colors.grey[800],
           ),

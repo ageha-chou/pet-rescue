@@ -16,10 +16,17 @@ class _PrincipalState extends State<Principal> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color.fromRGBO(253, 246, 240, 1),
       appBar: AppBar(
+        title: Text( "Pet Adoption ",
+            style: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+            )
+        ),
       brightness: Brightness.light,
-      backgroundColor: Colors.transparent,
+      backgroundColor: Theme.of(context).primaryColor,
       elevation: 0,
       leading: GestureDetector(
         onTap: () {
@@ -30,34 +37,12 @@ class _PrincipalState extends State<Principal> {
           color: Colors.grey[800],
         ),
       ),
-      actions: [
-        Padding(
-          padding: EdgeInsets.only(right: 16),
-          child: Icon(
-            Icons.more_horiz,
-            color: Colors.grey[800],
-          ),
-        ),
-      ],
     ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: Text(
-                "Pet Adoption ",
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 24,
-                ),
-              ),
-            ),
-
             Padding(
               padding: EdgeInsets.all(16),
               child: TextField(
