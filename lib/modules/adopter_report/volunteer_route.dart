@@ -153,8 +153,7 @@ class _VolunteerRouteState extends State<VolunteerRoute> {
       travelMode: TravelMode.driving,
       // wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")],
     );
-    print('>>');
-    print(result.errorMessage);
+    
     if (result.points.isNotEmpty) {
       result.points.forEach((PointLatLng point) {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
