@@ -27,8 +27,12 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
   Widget build(BuildContext context) {
     return Container(
       child: Scaffold(
-        appBar: AppBar(),
-        backgroundColor: ColorConstants.teal,
+        backgroundColor: Theme.of(context).backgroundColor,
+        appBar: AppBar(
+          title: Text('Pet report'),
+          backgroundColor: Theme.of(context).primaryColor,
+        ),
+
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -41,7 +45,7 @@ class _WaitingPetScreenState extends State<WaitingPetScreen> {
               ),
               SizedBox(height: 20),
               CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.black12),
               ),
               const SizedBox(
                 height: 20,
