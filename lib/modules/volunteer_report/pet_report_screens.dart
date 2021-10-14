@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/modules/volunteer_report/pet_waiting_screen.dart';
+import 'package:pet_rescue/modules/volunteer_report/report_form.dart';
 
 
 class PetReport extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         title: Text('Pet report'),
         backgroundColor: Theme.of(context).primaryColor,
@@ -130,10 +132,7 @@ Widget _buildNotificationCard(
               TextButton(
                 child: const Text('MORE DETAIL'),
                 onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => errorDialog,
-                  );
+                  Get.to(ReportForm());
                 },
               ),
               const SizedBox(width: 8),

@@ -1,5 +1,3 @@
-
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -7,185 +5,133 @@ import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:im_stepper/stepper.dart';
-import 'package:pet_rescue/modules/adopter_report/adopter_report_controller.dart';
 import 'package:pet_rescue/modules/volunteer_report/report_form.dart';
 import 'package:pet_rescue/modules/volunteer_report/volunteer_report_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
-class WaitingPetScreen extends GetView<VolunteerReportController> {
-  final volunteerController = Get.put(VolunteerReportController());
-  // final adopterController = Get.find<AdopterReportController>();
+class ReporterRoute extends StatefulWidget {
+  const ReporterRoute({Key? key}) : super(key: key);
+
+  @override
+  _ReporterRoute createState() => _ReporterRoute();
+}
+
+class _ReporterRoute extends State<ReporterRoute> {
+  final controller = Get.find<VolunteerReportController>();
+  final LatLng _volunteerLat = LatLng(10.782470184547625, 106.6790621573682); //
+  final LatLng _currentLat = LatLng(10.786496594215222, 106.67168185806077);//
+  late final GoogleMapController _controller;
+  Map<MarkerId, Marker> markers = {};
+  Map<PolylineId, Polyline> polylines = {};
+  List<LatLng> polylineCoordinates = [];
+  PolylinePoints polylinePoints = PolylinePoints();
+  String googleApiKey = dotenv.env['GG_API_KEY']!;
+
+  @override
+  void initState() {
+    super.initState();
+
+    //current marker
+    _addMarker(
+        _currentLat, "current", BitmapDescriptor.defaultMarkerWithHue(45));
+
+    //volunteer marker
+    _addMarker(
+        _volunteerLat, "volunteer", BitmapDescriptor.defaultMarkerWithHue(90));
+
+    _getPolyline();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
       appBar: AppBar(
         backgroundColor: Theme.of(context).primaryColor,
         title: Text('Reported Pets'),
       ),
-      body: Obx(
-            () => Column(
-          children: [
-            IconStepper(
-              activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
-              icons: [
-                Icon(
-                  FontAwesomeIcons.clock,
-                  color: controller.currentStep.value == 0
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-                Icon(
-                  Icons.location_on_outlined,
-                  color: controller.currentStep.value == 1
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-                Icon(
-                  FontAwesomeIcons.paw,
-                  color: controller.currentStep.value == 2
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-              ],
-              activeStep: controller.currentStep.value,
-              onStepReached: (index) {
-                controller.currentStep.value = index;
-              },
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              margin: EdgeInsets.symmetric(
-                horizontal: 25.0,
-                vertical: 10.0,
-              ),
-              child: _buildContent(context),
-            ),
-          ],
+      body: Stack(
+        children: [
+          _buildGoogleMap(),
+          _buildContainer(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContainer() {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        width: double.infinity,
+        margin: EdgeInsets.all(0),
+        child: _buildCard(
+          context,
+          onTapHandler: () =>
+              Get.to(ReportForm()),
+          location: controller.report.location,
+          petType: controller.report.petType,
+          quantity: controller.report.quantity.toString(),
+          healthCondition: controller.report.healCondition,
+          volunteer: _buildVolunteer(context,
+              volunteerName: 'Reporter Name', subTitle: '2km away'),
         ),
       ),
     );
   }
 
-  Widget _buildContent(BuildContext context) {
-    switch (controller.currentStep.value) {
-      case 0:
-        return Container(
-          child: ListView(
-            children: [
-              _buildCard(
-                context,
-                //Chổ này thêm bản đồ
-                onTapHandler: () => Get.toNamed(Routes.REPORTER_ROUTE),
-                location: controller.report.location,
-                petType: controller.report.petType,
-                quantity: controller.report.quantity.toString(),
-                healthCondition: controller.report.healCondition,
-              ),
-            ],
-          ),
-        );
-      case 1:
-        return ListView(
-          children: [
-            _buildCard(
-              context,
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(context,
-                  volunteerName: 'Reporter Name', subTitle: '2km away'),
-              acceptWidget: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      'Please press \'Pick the pet\' when you \'ve arrived.',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.currentStep++;
-                      },
-                      child: Text(
-                        'Pick the Pet',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(ColorConstants.red),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      case 2:
-        return ListView(
-          children: [
-            _buildCard(
-              context,
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(
-                context,
-                volunteerName: 'Reporter Name',
-                subTitle: '2km to go to the Center',
-              ),
-              acceptWidget: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      'After giving the pet to the shelter, please press \'Done\' to exit. ',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(Routes.HOME, (Route<dynamic> route) => false);
-                      },
-                      child: Text(
-                        'Done',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
-                        ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(ColorConstants.red),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        );
-      default:
-        return Container();
+  Widget _buildGoogleMap() {
+    return GoogleMap(
+      onMapCreated: onMapCreated,
+      initialCameraPosition: CameraPosition(target: _currentLat, zoom: 15.0),
+      mapType: MapType.normal,
+      myLocationEnabled: true,
+      tiltGesturesEnabled: true,
+      compassEnabled: true,
+      scrollGesturesEnabled: true,
+      zoomGesturesEnabled: false,
+      markers: Set<Marker>.of(markers.values),
+      polylines: Set<Polyline>.of(polylines.values),
+    );
+  }
+
+  void onMapCreated(GoogleMapController controller) {
+    _controller = controller;
+  }
+
+  _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
+    MarkerId markerId = MarkerId(id);
+    Marker marker =
+    Marker(markerId: markerId, icon: descriptor, position: position);
+    markers[markerId] = marker;
+  }
+
+  _addPolyLine() {
+    PolylineId id = PolylineId("poly");
+    Polyline polyline = Polyline(
+        polylineId: id,
+        color: Colors.orange,
+        width: 3,
+        points: polylineCoordinates);
+    polylines[id] = polyline;
+    setState(() {});
+  }
+
+  _getPolyline() async {
+    PolylineResult result = await polylinePoints.getRouteBetweenCoordinates(
+      googleApiKey,
+      PointLatLng(_currentLat.latitude, _currentLat.longitude),
+      PointLatLng(_volunteerLat.latitude, _volunteerLat.longitude),
+      travelMode: TravelMode.driving,
+      // wayPoints: [PolylineWayPoint(location: "Sabo, Yaba Lagos Nigeria")],
+    );
+
+    if (result.points.isNotEmpty) {
+      result.points.forEach((PointLatLng point) {
+        polylineCoordinates.add(LatLng(point.latitude, point.longitude));
+      });
     }
+    _addPolyLine();
   }
 
   Widget _buildCard(BuildContext context,
@@ -199,9 +145,9 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
     return InkWell(
       onTap: onTapHandler,
       child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(10.0),
+        // ),
         elevation: 5.0,
         child: Padding(
           padding: EdgeInsets.all(15.0),
@@ -311,7 +257,7 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
                   children: [
                     AnimatedTextKit(
                       animatedTexts: [
-                        WavyAnimatedText('On the way...'),
+                        WavyAnimatedText('In coming...'),
                       ],
                       repeatForever: true,
                     ),
@@ -365,6 +311,25 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
     );
   }
 
+  List<Widget> _buildLocation(BuildContext context, String location) {
+    return [
+      Icon(
+        Icons.location_pin,
+        size: 22,
+        color: ColorConstants.red,
+      ),
+      const SizedBox(width: 10),
+      Flexible(
+        child: Text(
+          location,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+          style: Theme.of(context).textTheme.headline6,
+        ),
+      ),
+    ];
+  }
+
   Widget _buildPopupMenu() {
     return PopupMenuButton(
       child: Container(
@@ -383,24 +348,5 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
         ),
       ],
     );
-  }
-
-  List<Widget> _buildLocation(BuildContext context, String location) {
-    return [
-      Icon(
-        Icons.location_pin,
-        size: 22,
-        color: ColorConstants.red,
-      ),
-      const SizedBox(width: 10),
-      Flexible(
-        child: Text(
-          location,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: Theme.of(context).textTheme.headline6,
-        ),
-      ),
-    ];
   }
 }
