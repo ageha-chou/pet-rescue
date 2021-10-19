@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
@@ -17,6 +21,8 @@ class VolunteerRoute extends StatefulWidget {
 }
 
 class _VolunteerRouteState extends State<VolunteerRoute> {
+  final volunteer = 'https://img.freepik'
+      '.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200';
   final controller = Get.find<AdopterReportController>();
   final LatLng _currentLat = LatLng(10.782470184547625, 106.6790621573682);
   final LatLng _volunteerLat = LatLng(10.786496594215222, 106.67168185806077);
@@ -26,20 +32,51 @@ class _VolunteerRouteState extends State<VolunteerRoute> {
   List<LatLng> polylineCoordinates = [];
   PolylinePoints polylinePoints = PolylinePoints();
   String googleApiKey = dotenv.env['GG_API_KEY']!;
+  late BitmapDescriptor volunteerDescriptor;
+  late BitmapDescriptor reporterDescriptor;
 
   @override
   void initState() {
     super.initState();
+    init();
+  }
+
+  void init() async {
+    await setCustomMapPin();
 
     //current marker
     _addMarker(
-        _currentLat, "current", BitmapDescriptor.defaultMarkerWithHue(45));
+      _currentLat,
+      "current",
+      reporterDescriptor,
+    );
 
     //volunteer marker
     _addMarker(
-        _volunteerLat, "volunteer", BitmapDescriptor.defaultMarkerWithHue(90));
+      _volunteerLat,
+      "volunteer",
+      volunteerDescriptor,
+    );
 
     _getPolyline();
+  }
+
+  Future<void> setCustomMapPin() async {
+    var image = await getBytesFromAsset('assets/images/yrh.png', 200);
+    reporterDescriptor = BitmapDescriptor.fromBytes(image);
+
+    image = await getBytesFromAsset('assets/images/volunteer_pin.png', 170);
+    volunteerDescriptor = BitmapDescriptor.fromBytes(image);
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
   }
 
   @override
@@ -160,6 +197,9 @@ class _VolunteerRouteState extends State<VolunteerRoute> {
         polylineCoordinates.add(LatLng(point.latitude, point.longitude));
       });
     }
+
+    print(">>");
+    print(result.errorMessage);
     _addPolyLine();
   }
 

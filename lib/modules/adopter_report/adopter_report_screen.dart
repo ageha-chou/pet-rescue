@@ -20,7 +20,8 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
         () => Column(
           children: [
             IconStepper(
-              activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
+              scrollingDisabled: true,
+              activeStepColor: ColorConstants.red,
               icons: [
                 Icon(
                   FontAwesomeIcons.clock,
@@ -46,6 +47,29 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                 controller.currentStep.value = index;
               },
             ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.start,
+            //   children: [
+            //     _buildLabel(
+            //       text: 'Waiting for volunteer',
+            //       margin: 52,
+            //       activeMargin: 55,
+            //       currentStep: 0,
+            //     ),
+            //     _buildLabel(
+            //       text: 'Give pet to volunteer',
+            //       margin: 25,
+            //       activeMargin: 22,
+            //       currentStep: 1,
+            //     ),
+            //     _buildLabel(
+            //       text: 'Reported pets',
+            //       margin: 22,
+            //       activeMargin: 18,
+            //       currentStep: 2,
+            //     ),
+            //   ],
+            // ),
             Container(
               height: MediaQuery.of(context).size.height * 0.7,
               margin: EdgeInsets.symmetric(
@@ -60,120 +84,306 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
     );
   }
 
+  Widget _buildLabel({
+    required String text,
+    double margin = 0,
+    double activeMargin = 0,
+    required int currentStep,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(
+        left:
+            controller.currentStep.value == currentStep ? activeMargin : margin,
+      ),
+      width: 80,
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        softWrap: true,
+        style: controller.currentStep.value == currentStep
+            ? Theme.of(Get.context!).textTheme.headline6!.copyWith(
+                  color: ColorConstants.red,
+                )
+            : Theme.of(Get.context!).textTheme.headline5,
+      ),
+    );
+  }
+
+  Widget _buildText(String text) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 5.0,
+        bottom: 5.0,
+      ),
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        style: Theme.of(Get.context!).textTheme.headline6!.copyWith(
+              color: ColorConstants.red,
+              fontSize: 26,
+            ),
+      ),
+    );
+  }
+
+  _buildCancelDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Align(
+              alignment: Alignment.topCenter,
+              child: Text(
+                'Why do you want to cancel?',
+                style: Theme.of(context).textTheme.headline6,
+              ),
+            ),
+            content: Obx(
+              () {
+                return Container(
+                  margin: const EdgeInsets.symmetric(
+                    horizontal: 20.0,
+                  ),
+                  child: Form(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        DropdownButtonFormField<String>(
+                          isExpanded: true,
+                          items: controller.reasons.toList().cast(),
+                          value: controller.selectedReasons.value == ""
+                              ? null
+                              : controller.selectedReasons.value,
+                          decoration: InputDecoration(
+                            label: Text('Reason'),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFb5b0ac)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFF0A9396)),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          onChanged: (value) {
+                            controller.selectedReasons.value = value.toString();
+                          },
+                        ),
+                        if (controller.selectedReasons.value ==
+                            'Other reasons') ...[
+                          const SizedBox(height: 15.0),
+                          Theme(
+                            data: Theme.of(Get.context!).copyWith(
+                              colorScheme: ThemeData().colorScheme.copyWith(
+                                    primary: Color(0xFF0A9396),
+                                  ),
+                            ),
+                            child: TextFormField(
+                              style: Theme.of(Get.context!).textTheme.headline6,
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                labelText: 'Reason',
+                                labelStyle:
+                                    Theme.of(Get.context!).textTheme.headline6,
+                                hintText: 'Your reason...',
+                                enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFFb5b0ac)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Color(0xFF0A9396)),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          );
+        });
+  }
+
   Widget _buildContent(BuildContext context) {
     switch (controller.currentStep.value) {
       case 0:
         return Container(
-          child: ListView(
+          child: Column(
             children: [
-              _buildCard(
-                context,
-                onTapHandler: () =>
-                    Get.toNamed(Routes.REPORT, arguments: controller.report),
-                location: controller.report.location,
-                petType: controller.report.petType,
-                quantity: controller.report.quantity.toString(),
-                healthCondition: controller.report.healCondition,
+              _buildText('Waiting for volunteer'),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildCard(
+                      context,
+                      onTapHandler: () => Get.toNamed(Routes.REPORT,
+                          arguments: controller.report),
+                      location: controller.report.location,
+                      petType: controller.report.petType,
+                      quantity: controller.report.quantity.toString(),
+                      healthCondition: controller.report.healCondition,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
         );
       case 1:
-        return ListView(
-          children: [
-            _buildCard(
-              context,
-              onTapHandler: () => Get.toNamed(Routes.VOLUNTEER_ROUTE),
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(context,
-                  volunteerName: 'Volunteer Name', subTitle: '2km away'),
-              acceptWidget: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      'Please press \'Give to Volunteer\' when volunteer picks '
-                      'these pets up',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.currentStep++;
-                      },
-                      child: Text(
-                        'Give to Volunteer',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Colors.white,
+        return Container(
+          child: Column(
+            children: [
+              _buildText('Give pet to volunteer'),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildCard(
+                      context,
+                      onTapHandler: () => Get.toNamed(Routes.VOLUNTEER_ROUTE),
+                      location: controller.report.location,
+                      petType: controller.report.petType,
+                      quantity: controller.report.quantity.toString(),
+                      healthCondition: controller.report.healCondition,
+                      volunteer: _buildVolunteer(context,
+                          volunteerName: 'Volunteer Name',
+                          subTitle: '2km away'),
+                      acceptWidget: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Please press \'Give to Volunteer\' when volunteer picks '
+                              'these pets up',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle2,
                             ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(ColorConstants.red),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                controller.currentStep++;
+                              },
+                              child: Text(
+                                'Give to Volunteer',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5!
+                                    .copyWith(
+                                      color: Colors.white,
+                                    ),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor: MaterialStateProperty.all(
+                                    ColorConstants.red),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       case 2:
-        return ListView(
-          children: [
-            _buildCard(
-              context,
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(
-                context,
-                volunteerName: 'Volunteer Name',
-                subTitle: '2km to go to the Center',
-              ),
-              acceptWidget: Row(
-                children: [
-                  Flexible(
-                    child: Text(
-                      'Please give feedback to our volunteer report ',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.currentStep++;
-                      },
-                      child: Text(
-                        'Feedback',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                              color: Colors.white,
+        return Container(
+          child: Column(
+            children: [
+              _buildText('Reported pets'),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildCard(
+                      context,
+                      location: controller.report.location,
+                      petType: controller.report.petType,
+                      quantity: controller.report.quantity.toString(),
+                      healthCondition: controller.report.healCondition,
+                      volunteer: _buildVolunteer(
+                        context,
+                        volunteerName: 'Volunteer Name',
+                        subTitle: '2km to go to the Center',
+                      ),
+                      acceptWidget: controller.isCompleted.value
+                          ? Align(
+                              alignment: Alignment.centerRight,
+                              child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                  vertical: 10.0,
+                                  horizontal: 10.0,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(color: Colors.green),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                child: Text(
+                                  'Your pet is safe',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline5!
+                                      .copyWith(
+                                        color: Colors.green,
+                                      ),
+                                ),
+                              ),
+                            )
+                          : Row(
+                              children: [
+                                Flexible(
+                                  child: Text(
+                                    'Please press \'confirm\' to confirm volunteer '
+                                    'brought pet to center',
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                    style:
+                                        Theme.of(context).textTheme.subtitle2,
+                                  ),
+                                ),
+                                Container(
+                                  margin: EdgeInsets.only(
+                                    left: 10.0,
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: () {
+                                      controller.isCompleted.value = true;
+                                    },
+                                    child: Text(
+                                      'Confirm',
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .headline5!
+                                          .copyWith(
+                                            color: Colors.white,
+                                          ),
+                                    ),
+                                    style: ButtonStyle(
+                                      backgroundColor:
+                                          MaterialStateProperty.all(
+                                              ColorConstants.red),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all(ColorConstants.red),
-                      ),
                     ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+                  ],
+                ),
+              )
+            ],
+          ),
         );
       default:
         return Container();
@@ -316,6 +526,29 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                       ],
                       repeatForever: true,
                     ),
+                    Spacer(),
+                    GestureDetector(
+                      onTap: () {
+                        _buildCancelDialog(context);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: 5.0,
+                          horizontal: 10.0,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                          border: Border.all(color: Colors.black, width: 0.5),
+                        ),
+                        child: Text(
+                          'Cancel',
+                          style:
+                              Theme.of(context).textTheme.headline5!.copyWith(
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ],
@@ -379,7 +612,10 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
         ),
       ),
       itemBuilder: (ctx) => [
-        const PopupMenuItem(
+        PopupMenuItem(
+          onTap: () {
+            _buildCancelDialog(ctx);
+          },
           child: Text('Cancel'),
         ),
       ],
