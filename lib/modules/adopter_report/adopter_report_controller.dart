@@ -5,6 +5,11 @@ import 'package:pet_rescue/models/report.dart';
 class AdopterReportController extends GetxController {
   var currentStep = 0.obs;
 
+  var isCompleted = false.obs;
+
+  List<DropdownMenuItem<String>> reasons = [];
+  var selectedReasons = "".obs;
+
   Report report = Report(
     location: '153 Nguyễn Thông, Phường 9, Quận 3, TPHCM',
     petType: 'Cat',
@@ -21,8 +26,27 @@ class AdopterReportController extends GetxController {
     emergencyCase: true,
   );
 
+  List _listReason = [
+    'I\'m busy right now, cannot wait for volunteer',
+    'I found someone wants to adopt this pet',
+    'Other reasons',
+  ];
+
   @override
   void onInit() {
     super.onInit();
+
+    for (String value in _listReason) {
+      reasons.add(
+        DropdownMenuItem(
+          child: Text(
+            value,
+            style: Theme.of(Get.context!).textTheme.headline6,
+            // overflow: TextOverflow.ellipsis,
+          ),
+          value: value,
+        ),
+      );
+    }
   }
 }

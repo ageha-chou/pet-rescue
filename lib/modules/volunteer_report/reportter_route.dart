@@ -1,5 +1,9 @@
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -20,7 +24,7 @@ class ReporterRoute extends StatefulWidget {
 class _ReporterRoute extends State<ReporterRoute> {
   final controller = Get.find<VolunteerReportController>();
   final LatLng _volunteerLat = LatLng(10.782470184547625, 106.6790621573682); //
-  final LatLng _currentLat = LatLng(10.786496594215222, 106.67168185806077);//
+  final LatLng _currentLat = LatLng(10.786496594215222, 106.67168185806077); //
   late final GoogleMapController _controller;
   Map<MarkerId, Marker> markers = {};
   Map<PolylineId, Polyline> polylines = {};
@@ -28,17 +32,50 @@ class _ReporterRoute extends State<ReporterRoute> {
   PolylinePoints polylinePoints = PolylinePoints();
   String googleApiKey = dotenv.env['GG_API_KEY']!;
 
+  late BitmapDescriptor volunteerDescriptor;
+  late BitmapDescriptor petDescriptor;
+
   @override
   void initState() {
     super.initState();
 
+    init();
+  }
+
+  Future<void> setCustomMapPin() async {
+    var image = await getBytesFromAsset('assets/images/yrh.png', 170);
+    petDescriptor = BitmapDescriptor.fromBytes(image);
+
+    image = await getBytesFromAsset('assets/images/pet-pin.png', 120);
+    volunteerDescriptor = BitmapDescriptor.fromBytes(image);
+  }
+
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+    ui.FrameInfo fi = await codec.getNextFrame();
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
+  void init() async {
+    await setCustomMapPin();
+
     //current marker
     _addMarker(
-        _currentLat, "current", BitmapDescriptor.defaultMarkerWithHue(45));
+      _currentLat,
+      "current",
+      petDescriptor,
+    );
 
     //volunteer marker
     _addMarker(
-        _volunteerLat, "volunteer", BitmapDescriptor.defaultMarkerWithHue(90));
+      _volunteerLat,
+      "volunteer",
+      volunteerDescriptor,
+    );
 
     _getPolyline();
   }
@@ -67,8 +104,7 @@ class _ReporterRoute extends State<ReporterRoute> {
         margin: EdgeInsets.all(0),
         child: _buildCard(
           context,
-          onTapHandler: () =>
-              Get.to(ReportForm()),
+          onTapHandler: () => Get.to(ReportForm()),
           location: controller.report.location,
           petType: controller.report.petType,
           quantity: controller.report.quantity.toString(),
@@ -102,7 +138,7 @@ class _ReporterRoute extends State<ReporterRoute> {
   _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
     MarkerId markerId = MarkerId(id);
     Marker marker =
-    Marker(markerId: markerId, icon: descriptor, position: position);
+        Marker(markerId: markerId, icon: descriptor, position: position);
     markers[markerId] = marker;
   }
 
@@ -136,12 +172,12 @@ class _ReporterRoute extends State<ReporterRoute> {
 
   Widget _buildCard(BuildContext context,
       {required String location,
-        required String petType,
-        required String quantity,
-        required String healthCondition,
-        Widget? volunteer,
-        Widget? acceptWidget,
-        VoidCallback? onTapHandler}) {
+      required String petType,
+      required String quantity,
+      required String healthCondition,
+      Widget? volunteer,
+      Widget? acceptWidget,
+      VoidCallback? onTapHandler}) {
     return InkWell(
       onTap: onTapHandler,
       child: Card(
@@ -281,8 +317,7 @@ class _ReporterRoute extends State<ReporterRoute> {
       children: [
         CircleAvatar(
           // child: Icon(Icons.person),
-          backgroundImage: NetworkImage(
-              'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200'),
+          backgroundImage: AssetImage('assets/images/user_avatar.jpg'),
           // backgroundColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(width: 10),
@@ -294,8 +329,8 @@ class _ReporterRoute extends State<ReporterRoute> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: ColorConstants.red,
-              ),
+                    color: ColorConstants.red,
+                  ),
             ),
             Text(
               subTitle,

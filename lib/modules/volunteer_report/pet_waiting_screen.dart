@@ -1,15 +1,8 @@
-
-
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:im_stepper/stepper.dart';
-import 'package:pet_rescue/modules/adopter_report/adopter_report_controller.dart';
-import 'package:pet_rescue/modules/volunteer_report/report_form.dart';
 import 'package:pet_rescue/modules/volunteer_report/volunteer_report_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
@@ -27,7 +20,7 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
         title: Text('Reported Pets'),
       ),
       body: Obx(
-            () => Column(
+        () => Column(
           children: [
             IconStepper(
               activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
@@ -70,63 +63,97 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
     );
   }
 
+  Widget _buildText(String text) {
+    return Container(
+      margin: const EdgeInsets.only(
+        top: 5.0,
+        bottom: 5.0,
+      ),
+      alignment: Alignment.topLeft,
+      child: Text(
+        text,
+        style: Theme.of(Get.context!).textTheme.headline6!.copyWith(
+              color: ColorConstants.red,
+              fontSize: 26,
+            ),
+      ),
+    );
+  }
+
   Widget _buildContent(BuildContext context) {
     switch (controller.currentStep.value) {
       case 0:
         return Container(
-          child: ListView(
+          child: Column(
             children: [
-              _buildCard(
-                context,
-                //Chổ này thêm bản đồ
-                onTapHandler: () => Get.toNamed(Routes.REPORTER_ROUTE),
-                location: controller.report.location,
-                petType: controller.report.petType,
-                quantity: controller.report.quantity.toString(),
-                healthCondition: controller.report.healCondition,
-              ),
+              _buildText('On the way'),
+              Expanded(
+                child: ListView(
+                  children: [
+                    _buildCard(
+                      context,
+                      //Chổ này thêm bản đồ
+                      onTapHandler: () => Get.toNamed(Routes.REPORTER_ROUTE),
+                      location: controller.report.location,
+                      petType: controller.report.petType,
+                      quantity: controller.report.quantity.toString(),
+                      healthCondition: controller.report.healCondition,
+                    ),
+                  ],
+                ),
+              )
             ],
           ),
         );
       case 1:
-        return ListView(
+        return Column(
           children: [
-            _buildCard(
-              context,
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(context,
-                  volunteerName: 'Reporter Name', subTitle: '2km away'),
-              acceptWidget: Row(
+            _buildText('Volunteer arrived'),
+            Expanded(
+              child: ListView(
                 children: [
-                  Flexible(
-                    child: Text(
-                      'Please press \'Pick the pet\' when you \'ve arrived.',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        controller.currentStep++;
-                      },
-                      child: Text(
-                        'Pick the Pet',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
+                  _buildCard(
+                    context,
+                    location: controller.report.location,
+                    petType: controller.report.petType,
+                    quantity: controller.report.quantity.toString(),
+                    healthCondition: controller.report.healCondition,
+                    volunteer: _buildVolunteer(context,
+                        volunteerName: 'Reporter Name', subTitle: '2km away'),
+                    acceptWidget: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'Please press \'Pick the pet\' when you \'ve arrived.',
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
                         ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(ColorConstants.red),
-                      ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 10.0,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              controller.currentStep++;
+                            },
+                            child: Text(
+                              'Pick the Pet',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(ColorConstants.red),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -135,47 +162,58 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
           ],
         );
       case 2:
-        return ListView(
+        return Column(
           children: [
-            _buildCard(
-              context,
-              location: controller.report.location,
-              petType: controller.report.petType,
-              quantity: controller.report.quantity.toString(),
-              healthCondition: controller.report.healCondition,
-              volunteer: _buildVolunteer(
-                context,
-                volunteerName: 'Reporter Name',
-                subTitle: '2km to go to the Center',
-              ),
-              acceptWidget: Row(
+            _buildText('Pet is on the way'),
+            Expanded(
+              child: ListView(
                 children: [
-                  Flexible(
-                    child: Text(
-                      'After giving the pet to the shelter, please press \'Done\' to exit. ',
-                      maxLines: 3,
-                      overflow: TextOverflow.ellipsis,
-                      style: Theme.of(context).textTheme.subtitle2,
+                  _buildCard(
+                    context,
+                    location: controller.report.location,
+                    petType: controller.report.petType,
+                    quantity: controller.report.quantity.toString(),
+                    healthCondition: controller.report.healCondition,
+                    volunteer: _buildVolunteer(
+                      context,
+                      volunteerName: 'Reporter Name',
+                      subTitle: '2km to go to the Center',
                     ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      left: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.of(context).pushNamedAndRemoveUntil(Routes.HOME, (Route<dynamic> route) => false);
-                      },
-                      child: Text(
-                        'Done',
-                        style: Theme.of(context).textTheme.headline5!.copyWith(
-                          color: Colors.white,
+                    acceptWidget: Row(
+                      children: [
+                        Flexible(
+                          child: Text(
+                            'After giving the pet to the shelter, please press \'Done\' to exit. ',
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: Theme.of(context).textTheme.subtitle2,
+                          ),
                         ),
-                      ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                        MaterialStateProperty.all(ColorConstants.red),
-                      ),
+                        Container(
+                          margin: EdgeInsets.only(
+                            left: 10.0,
+                          ),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.of(context).pushNamedAndRemoveUntil(
+                                  Routes.HOME, (Route<dynamic> route) => false);
+                            },
+                            child: Text(
+                              'Done',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .headline5!
+                                  .copyWith(
+                                    color: Colors.white,
+                                  ),
+                            ),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  MaterialStateProperty.all(ColorConstants.red),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],
@@ -190,12 +228,12 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
 
   Widget _buildCard(BuildContext context,
       {required String location,
-        required String petType,
-        required String quantity,
-        required String healthCondition,
-        Widget? volunteer,
-        Widget? acceptWidget,
-        VoidCallback? onTapHandler}) {
+      required String petType,
+      required String quantity,
+      required String healthCondition,
+      Widget? volunteer,
+      Widget? acceptWidget,
+      VoidCallback? onTapHandler}) {
     return InkWell(
       onTap: onTapHandler,
       child: Card(
@@ -335,8 +373,7 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
       children: [
         CircleAvatar(
           // child: Icon(Icons.person),
-          backgroundImage: NetworkImage(
-              'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200'),
+          backgroundImage: AssetImage('assets/images/user_avatar.jpg'),
           // backgroundColor: Theme.of(context).primaryColor,
         ),
         const SizedBox(width: 10),
@@ -348,8 +385,8 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context).textTheme.headline6!.copyWith(
-                color: ColorConstants.red,
-              ),
+                    color: ColorConstants.red,
+                  ),
             ),
             Text(
               subTitle,

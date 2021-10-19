@@ -3,14 +3,12 @@ import 'package:pet_rescue/temp/pet_widget.dart';
 import 'category_list.dart';
 import 'data.dart';
 
-
 class Principal extends StatefulWidget {
   @override
   _PrincipalState createState() => _PrincipalState();
 }
 
 class _PrincipalState extends State<Principal> {
-
   List<Pet> pets = getPetList();
 
   @override
@@ -18,26 +16,25 @@ class _PrincipalState extends State<Principal> {
     return Scaffold(
       backgroundColor: Color.fromRGBO(253, 246, 240, 1),
       appBar: AppBar(
-        title: Text( "Pet Adoption ",
+        title: Text("Pet Adoption ",
             style: TextStyle(
               color: Colors.black,
               fontWeight: FontWeight.bold,
               fontSize: 24,
-            )
-        ),
-      brightness: Brightness.light,
-      backgroundColor: Theme.of(context).primaryColor,
-      elevation: 0,
-      leading: GestureDetector(
-        onTap: () {
-          Navigator.pop(context);
-        },
-        child: Icon(
-          Icons.arrow_back,
-          color: Colors.grey[800],
+            )),
+        brightness: Brightness.light,
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () {
+            Navigator.pop(context);
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.grey[800],
+          ),
         ),
       ),
-    ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Column(
@@ -52,13 +49,15 @@ class _PrincipalState extends State<Principal> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15),
                     borderSide: BorderSide(
-                      width: 0, 
+                      width: 0,
                       style: BorderStyle.none,
                     ),
                   ),
                   filled: true,
                   fillColor: Colors.grey[100],
-                  contentPadding: EdgeInsets.only(right: 30,),
+                  contentPadding: EdgeInsets.only(
+                    right: 30,
+                  ),
                   prefixIcon: Padding(
                     padding: EdgeInsets.only(right: 16.0, left: 24.0),
                     child: Icon(
@@ -70,13 +69,11 @@ class _PrincipalState extends State<Principal> {
                 ),
               ),
             ),
-
             Padding(
               padding: EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Text(
                     "Pet Category",
                     style: TextStyle(
@@ -85,16 +82,13 @@ class _PrincipalState extends State<Principal> {
                       color: Colors.grey[800],
                     ),
                   ),
-
                   Icon(
                     Icons.more_horiz,
                     color: Colors.grey[800],
                   ),
-
                 ],
               ),
             ),
-
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 8),
               child: Column(
@@ -102,20 +96,19 @@ class _PrincipalState extends State<Principal> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      buildPetCategory(Category.CAT, "210", Colors.blue.shade200),
-                      buildPetCategory(Category.DOG, "340", Colors.red.shade200),
+                      buildPetCategory(
+                          Category.CAT, "89", Colors.blue.shade200),
+                      buildPetCategory(Category.DOG, "55", Colors.red.shade200),
                     ],
                   ),
                 ],
               ),
             ),
-
             Padding(
               padding: EdgeInsets.all(16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                   Text(
                     "Newest Pet",
                     style: TextStyle(
@@ -124,16 +117,13 @@ class _PrincipalState extends State<Principal> {
                       color: Colors.grey[800],
                     ),
                   ),
-
                   Icon(
                     Icons.more_horiz,
                     color: Colors.grey[800],
                   ),
-
                 ],
               ),
             ),
-
             Container(
               height: 280,
               child: ListView(
@@ -148,13 +138,14 @@ class _PrincipalState extends State<Principal> {
     );
   }
 
-  Widget buildPetCategory(Category category, String total, Color color){
+  Widget buildPetCategory(Category category, String total, Color color) {
     return Expanded(
       child: GestureDetector(
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => CategoryList(category: category)),
+            MaterialPageRoute(
+                builder: (context) => CategoryList(category: category)),
           );
         },
         child: Container(
@@ -172,7 +163,6 @@ class _PrincipalState extends State<Principal> {
           ),
           child: Row(
             children: [
-
               Container(
                 height: 56,
                 width: 56,
@@ -185,31 +175,41 @@ class _PrincipalState extends State<Principal> {
                     height: 30,
                     width: 30,
                     child: Image.asset(
-                      "assets/images/" + (category == Category.HAMSTER ? "hamster" : category == Category.CAT ? "cat" : category == Category.BUNNY ? "bunny" : "dog") + ".png",
+                      "assets/images/" +
+                          (category == Category.HAMSTER
+                              ? "hamster"
+                              : category == Category.CAT
+                                  ? "cat"
+                                  : category == Category.BUNNY
+                                      ? "bunny"
+                                      : "dog") +
+                          ".png",
                       fit: BoxFit.fitHeight,
                     ),
                   ),
                 ),
               ),
-
               SizedBox(
                 width: 12,
               ),
-
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-
                   Text(
-                    category == Category.HAMSTER ? "Hamsters" : category == Category.CAT ? "Cats" : category == Category.BUNNY ? "Bunnies" : "Dogs",
+                    category == Category.HAMSTER
+                        ? "Hamsters"
+                        : category == Category.CAT
+                            ? "Cats"
+                            : category == Category.BUNNY
+                                ? "Bunnies"
+                                : "Dogs",
                     style: TextStyle(
                       color: Colors.grey[800],
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                   Text(
                     "Total of " + total,
                     style: TextStyle(
@@ -217,10 +217,8 @@ class _PrincipalState extends State<Principal> {
                       fontSize: 14,
                     ),
                   ),
-
                 ],
               ),
-
             ],
           ),
         ),
@@ -228,22 +226,17 @@ class _PrincipalState extends State<Principal> {
     );
   }
 
-  List<Widget> buildNewestPet(){
+  List<Widget> buildNewestPet() {
     List<Widget> list = [];
     for (var i = 0; i < pets.length; i++) {
-      if(pets[i].newest){
-        list.add(
-          PetWidget(
-            pet: pets[i], 
-            index: i
-          )
-        );
+      if (pets[i].newest) {
+        list.add(PetWidget(pet: pets[i], index: i));
       }
     }
     return list;
   }
 
-  Widget buildVet(String imageUrl, String name, String phone){
+  Widget buildVet(String imageUrl, String name, String phone) {
     return Container(
       margin: EdgeInsets.only(left: 16, right: 16, bottom: 16, top: 4),
       padding: EdgeInsets.all(16),
@@ -258,7 +251,6 @@ class _PrincipalState extends State<Principal> {
       ),
       child: Row(
         children: [
-
           Container(
             height: 98,
             width: 98,
@@ -269,16 +261,13 @@ class _PrincipalState extends State<Principal> {
               ),
             ),
           ),
-
           SizedBox(
             width: 16,
           ),
-
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-
               Text(
                 name,
                 style: TextStyle(
@@ -287,24 +276,19 @@ class _PrincipalState extends State<Principal> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-
               SizedBox(
                 height: 8,
               ),
-
               Row(
                 children: [
-
                   Icon(
                     Icons.phone,
                     color: Colors.grey[800],
                     size: 18,
                   ),
-
                   SizedBox(
                     width: 8,
                   ),
-
                   Text(
                     phone,
                     style: TextStyle(
@@ -313,14 +297,11 @@ class _PrincipalState extends State<Principal> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-
                 ],
               ),
-
               SizedBox(
                 height: 8,
               ),
-
               Container(
                 decoration: BoxDecoration(
                   color: Colors.green[100],
@@ -338,13 +319,10 @@ class _PrincipalState extends State<Principal> {
                   ),
                 ),
               ),
-
             ],
           ),
-
         ],
       ),
     );
   }
-
 }
