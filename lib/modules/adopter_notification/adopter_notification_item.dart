@@ -19,6 +19,10 @@ class AdopterNotificationItem extends StatelessWidget {
     required this.isNew,
   });
 
+  _getImage(String url) {
+    return imgUrl.contains('http') ? NetworkImage(imgUrl) : AssetImage(imgUrl);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +52,7 @@ class AdopterNotificationItem extends StatelessWidget {
                   shape: BoxShape.circle,
                   image: DecorationImage(
                     fit: BoxFit.fill,
-                    image: NetworkImage(imgUrl),
+                    image: _getImage(imgUrl),
                   ),
                 ),
               ),

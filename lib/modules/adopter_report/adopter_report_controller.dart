@@ -10,6 +10,8 @@ class AdopterReportController extends GetxController {
   List<DropdownMenuItem<String>> reasons = [];
   var selectedReasons = "".obs;
 
+  final reasonController = TextEditingController();
+
   Report report = Report(
     location: '153 Nguyễn Thông, Phường 9, Quận 3, TPHCM',
     petType: 'Cat',

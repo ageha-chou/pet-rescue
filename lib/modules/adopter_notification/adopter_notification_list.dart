@@ -19,7 +19,54 @@ class AdopterNotificationList extends StatelessWidget {
           children: [
             AdopterNotificationItem(
               imgUrl:
-                  'https://www.rd.com/wp-content/uploads/2021/04/GettyImages-988013222-scaled-e1618857975729.jpg',
+                  'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200',
+              title: 'The volunteer has canceled your report',
+              icon: Icon(
+                Icons.volunteer_activism,
+                size: 20,
+              ),
+              circleColor: Colors.green[600]!,
+              isNew: true,
+              content: RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.headline4,
+                  children: <TextSpan>[
+                    TextSpan(text: 'The volunteer '),
+                    TextSpan(
+                      text: 'Volunteer name ',
+                      style: TextStyle(color: ColorConstants.red),
+                    ),
+                    TextSpan(text: 'has canceled your report.\n'),
+                    TextSpan(text: 'Reason: ... '),
+                  ],
+                ),
+              ),
+            ),
+            AdopterNotificationItem(
+              imgUrl: 'assets/images/logo.png',
+              title: 'Thanks for updating pet diary',
+              icon: Icon(
+                Icons.announcement_rounded,
+                size: 20,
+              ),
+              circleColor: Colors.blue[600]!,
+              isNew: false,
+              content: RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.headline4,
+                  children: <TextSpan>[
+                    TextSpan(text: 'Your '),
+                    TextSpan(
+                      text: 'Pet Name ',
+                      style: TextStyle(color: ColorConstants.red),
+                    ),
+                    TextSpan(text: '\'s diary has been updated! '),
+                  ],
+                ),
+              ),
+            ),
+            AdopterNotificationItem(
+              imgUrl: 'assets/images/logo.png',
               title: 'Update pet diary reminding',
               icon: Icon(
                 Icons.announcement_rounded,
@@ -61,7 +108,7 @@ class AdopterNotificationList extends StatelessWidget {
                       style: TextStyle(color: ColorConstants.red),
                     ),
                     TextSpan(
-                        text: 'has brought your reported abandoned pete to the '
+                        text: 'has brought your reported abandoned pet to the '
                             'center'),
                   ],
                 ),
