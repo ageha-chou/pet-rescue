@@ -4,6 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:im_stepper/stepper.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_controller.dart';
+import 'package:pet_rescue/modules/adopter_report/center_route.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
@@ -138,6 +139,20 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                 style: Theme.of(context).textTheme.headline6,
               ),
             ),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: Text('Cancel',
+                    style: Theme.of(context).textTheme.headline6),
+              ),
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text('Confirm',
+                    style: Theme.of(context).textTheme.headline6),
+              ),
+            ],
             content: Obx(
               () {
                 return Container(
@@ -179,6 +194,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                                   ),
                             ),
                             child: TextFormField(
+                              controller: controller.reasonController,
                               style: Theme.of(Get.context!).textTheme.headline6,
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
@@ -315,6 +331,11 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                         volunteerName: 'Volunteer Name',
                         subTitle: '2km to go to the Center',
                       ),
+                      onTapHandler: () {
+                        if (!controller.isCompleted.value) {
+                          Get.to(() => CenterRoute());
+                        }
+                      },
                       acceptWidget: controller.isCompleted.value
                           ? Align(
                               alignment: Alignment.centerRight,
@@ -415,7 +436,7 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
                   if (volunteer == null) ...[
                     const SizedBox(height: 8),
                     ..._buildLocation(context, location),
-                    _buildPopupMenu(),
+                    _buildPopupMenu(context),
                   ],
                   // Spacer(),
                 ],
@@ -594,13 +615,18 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
           ],
         ),
         Spacer(),
-        _buildPopupMenu(),
+        _buildPopupMenu(context),
       ],
     );
   }
 
-  Widget _buildPopupMenu() {
+  Widget _buildPopupMenu(BuildContext context) {
     return PopupMenuButton(
+      onSelected: (value) {
+        if (value == 0) {
+          _buildCancelDialog(context);
+        }
+      },
       child: Container(
         height: 20,
         margin: EdgeInsets.only(
@@ -613,10 +639,11 @@ class AdopterReportScreen extends GetView<AdopterReportController> {
       ),
       itemBuilder: (ctx) => [
         PopupMenuItem(
-          onTap: () {
-            _buildCancelDialog(ctx);
-          },
-          child: Text('Cancel'),
+          value: 0,
+          child: Text(
+            'Cancel',
+            style: TextStyle(color: Colors.red),
+          ),
         ),
       ],
     );
