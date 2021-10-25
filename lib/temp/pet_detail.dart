@@ -98,9 +98,8 @@ class PetDetail extends StatelessWidget {
 
                       Container(
                         height: 50,
-                        width: 50,
+                        width: 45,
                       ),
-
                     ],
                   ),
                 ),
