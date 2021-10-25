@@ -268,7 +268,7 @@ class UserProfile extends StatelessWidget {
                 onPressed: () {
                   Get.to(EditProfile());
                 },
-                splashColor: Colors.blue.shade300,
+                splashColor: ColorConstants.primary,
                 color: ColorConstants.primary.withOpacity(0.8),
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.all(Radius.circular(10.0))),
