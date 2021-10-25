@@ -54,6 +54,7 @@ class EditProfile extends StatelessWidget {
                       labelText: "Full Name",
                       hintText: "Nguyen Xuan Mai Trinh",
                       labelStyle: Theme.of(context).textTheme.headline6,
+                      hintStyle: Theme.of(context).textTheme.headline6,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFb5b0ac)),
@@ -81,6 +82,7 @@ class EditProfile extends StatelessWidget {
                       labelText: "Phone",
                       hintText: '0773 853 338',
                       labelStyle: Theme.of(context).textTheme.headline6,
+                      hintStyle: Theme.of(context).textTheme.headline6,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFb5b0ac)),
@@ -106,6 +108,7 @@ class EditProfile extends StatelessWidget {
                     decoration: InputDecoration(
                       labelText: "Address",
                       hintText: '144 Duong Dinh Hoi, Thu Duc,\n Ho Chi Minh.',
+                      hintStyle: Theme.of(context).textTheme.headline6,
                       labelStyle: Theme.of(context).textTheme.headline6,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
@@ -133,6 +136,7 @@ class EditProfile extends StatelessWidget {
                       labelText: "Teacher",
                       hintText: 'Teacher',
                       labelStyle: Theme.of(context).textTheme.headline6,
+                      hintStyle: Theme.of(context).textTheme.headline6,
                       floatingLabelBehavior: FloatingLabelBehavior.always,
                       enabledBorder: OutlineInputBorder(
                         borderSide: BorderSide(color: Color(0xFFb5b0ac)),

@@ -117,7 +117,7 @@ class UserProfile extends StatelessWidget {
                             Container(
                               width: MediaQuery.of(context).size.width - 268,
                               child: Text(
-                                "144 Duong Dinh Hoi, Thu Duc,\n Ho Chi Minh.",
+                                "144 Duong Dinh Hoi, Thu Duc,\nHo Chi Minh.",
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline5!

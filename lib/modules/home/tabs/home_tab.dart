@@ -8,8 +8,6 @@ import 'package:pet_rescue/modules/volunteer_report/pet_report_screens.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/temp/principal.dart';
 
-
-
 class HomeTab extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
@@ -21,7 +19,7 @@ class HomeTab extends GetView<MainController> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             _buildCard(
-              label: 'List Pets',
+              label: 'Pets List',
               imageUrl: 'assets/images/pet-list.png',
               ctx: context,
               onTapHandler: () => Get.to(() => Principal()),

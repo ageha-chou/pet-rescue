@@ -43,7 +43,8 @@ class AdopterNotificationList extends StatelessWidget {
               ),
             ),
             AdopterNotificationItem(
-              imgUrl: 'assets/images/logo.png',
+              imgUrl:
+                  'https://meowtel.com/img/assets/home/hero-image-cat-1.png',
               title: 'Thanks for updating pet diary',
               icon: Icon(
                 Icons.announcement_rounded,
@@ -66,7 +67,8 @@ class AdopterNotificationList extends StatelessWidget {
               ),
             ),
             AdopterNotificationItem(
-              imgUrl: 'assets/images/logo.png',
+              imgUrl:
+                  'https://meowtel.com/img/assets/home/hero-image-cat-1.png',
               title: 'Update pet diary reminding',
               icon: Icon(
                 Icons.announcement_rounded,
