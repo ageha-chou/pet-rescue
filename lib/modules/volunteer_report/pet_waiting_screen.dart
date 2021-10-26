@@ -10,6 +10,7 @@ import 'package:pet_rescue/shared/constants/color.dart';
 class WaitingPetScreen extends GetView<VolunteerReportController> {
   final volunteerController = Get.put(VolunteerReportController());
   // final adopterController = Get.find<AdopterReportController>();
+  TextEditingController _textFieldController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,44 +21,46 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
         title: Text('Reported Pets'),
       ),
       body: Obx(
-        () => Column(
-          children: [
-            IconStepper(
-              activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
-              icons: [
-                Icon(
-                  FontAwesomeIcons.clock,
-                  color: controller.currentStep.value == 0
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-                Icon(
-                  Icons.location_on_outlined,
-                  color: controller.currentStep.value == 1
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-                Icon(
-                  FontAwesomeIcons.paw,
-                  color: controller.currentStep.value == 2
-                      ? Colors.white
-                      : Color(0xFF4D6A6D),
-                ),
-              ],
-              activeStep: controller.currentStep.value,
-              onStepReached: (index) {
-                controller.currentStep.value = index;
-              },
-            ),
-            Container(
-              height: MediaQuery.of(context).size.height * 0.7,
-              margin: EdgeInsets.symmetric(
-                horizontal: 25.0,
-                vertical: 10.0,
+        () => new SingleChildScrollView(
+          child: Column(
+            children: [
+              IconStepper(
+                activeStepColor: const Color.fromRGBO(210, 88, 88, 0.8),
+                icons: [
+                  Icon(
+                    FontAwesomeIcons.clock,
+                    color: controller.currentStep.value == 0
+                        ? Colors.white
+                        : Color(0xFF4D6A6D),
+                  ),
+                  Icon(
+                    Icons.location_on_outlined,
+                    color: controller.currentStep.value == 1
+                        ? Colors.white
+                        : Color(0xFF4D6A6D),
+                  ),
+                  Icon(
+                    FontAwesomeIcons.paw,
+                    color: controller.currentStep.value == 2
+                        ? Colors.white
+                        : Color(0xFF4D6A6D),
+                  ),
+                ],
+                activeStep: controller.currentStep.value,
+                onStepReached: (index) {
+                  controller.currentStep.value = index;
+                },
               ),
-              child: _buildContent(context),
-            ),
-          ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.7,
+                margin: EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 10.0,
+                ),
+                child: _buildContent(context),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -98,17 +101,53 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
                       petType: controller.report.petType,
                       quantity: controller.report.quantity.toString(),
                       healthCondition: controller.report.healCondition,
+                      acceptWidget: Row(
+                        children: [
+                          Flexible(
+                            child: Text(
+                              'Give us the reason after press \'Cancel\' button',
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: Theme.of(context).textTheme.subtitle2,
+                            ),
+                          ),
+                          Container(
+                            margin: EdgeInsets.only(
+                              left: 10.0,
+                            ),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                showAlertDialog(context);
+                              },
+                              child: Text(
+                                'Cancel',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline5!
+                                    .copyWith(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              style: ButtonStyle(
+                                backgroundColor:
+                                MaterialStateProperty.all(ColorConstants.red),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              )
+              ),
+
             ],
           ),
         );
       case 1:
         return Column(
           children: [
-            _buildText('Volunteer arrived'),
+            _buildText('Checking the pet...'),
             Expanded(
               child: ListView(
                 children: [
@@ -164,12 +203,13 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
       case 2:
         return Column(
           children: [
-            _buildText('Pet is on the way'),
+            _buildText('The rescuing pet is on the way back...'),
             Expanded(
               child: ListView(
                 children: [
                   _buildCard(
                     context,
+                    onTapHandler: () => Get.toNamed(Routes.REPORTER_ROUTE),
                     location: controller.report.location,
                     petType: controller.report.petType,
                     quantity: controller.report.quantity.toString(),
@@ -440,4 +480,73 @@ class WaitingPetScreen extends GetView<VolunteerReportController> {
       ),
     ];
   }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel the report"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+        _displayTextInputDialog(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert from the Pet Rescue"),
+      content: Text("Are you sure to cancel this report ?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Your reason'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Ex: I accidently click on \'accept\' report."),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                print(_textFieldController.text);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    Routes.HOME, (Route<dynamic> route) => false);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
 }
+
