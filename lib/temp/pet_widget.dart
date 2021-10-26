@@ -111,6 +111,32 @@ class PetWidget extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
+                  SizedBox(
+                    height: 8,
+                  ),
+                  Row(
+                    children:[
+                      Image.asset("assets/images/mappin.png"),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      RichText(
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                              text: pet.location,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ]
+                        ),
+                      ),
+
+                    ]
+                  ),
 
                   SizedBox(
                     height: 8,

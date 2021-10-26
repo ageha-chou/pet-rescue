@@ -1,14 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:pet_rescue/data/report_status.dart';
 import 'package:pet_rescue/temp/user_avatar.dart';
 
 import 'data.dart';
 
 
-class PetDetail extends StatelessWidget {
+class PetDetail extends StatefulWidget {
 
   final Pet pet;
 
   PetDetail({required this.pet});
+
+  @override
+  State<PetDetail> createState() => _PetDetailState();
+}
+
+class _PetDetailState extends State<PetDetail> {
+
+
+  @override
+  void setState(VoidCallback fn) {
+    super.setState(fn);
+    onClickLikeButton();
+  }
+  late bool isClicked = false;
+  bool onClickLikeButton(){
+    if(isClicked){
+      isClicked =  false;
+    }else{
+      isClicked = true;
+    }
+    print(isClicked);
+    return isClicked;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +70,11 @@ class PetDetail extends StatelessWidget {
             child: Stack(
               children: [
                 Hero(
-                  tag: pet.imageUrl,
+                  tag: widget.pet.imageUrl,
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(pet.imageUrl),
+                        image: AssetImage(widget.pet.imageUrl),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.only(
@@ -81,17 +105,31 @@ class PetDetail extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
 
-                          Text(
-                            pet.name,
-                            style: TextStyle(
-                              color: Colors.grey[800],
-                              fontWeight: FontWeight.bold,
-                              fontSize: 24,
-                            ),
-                          ),
+                          Row(
+                            children:[
+                              Text(
+                                widget.pet.name,
+                                style: TextStyle(
+                                  color: Colors.grey[800],
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 24,
+                                ),
+                              ),
 
-                          SizedBox(
-                            height: 8,
+                              SizedBox(
+                                height: 8,
+                                width: 92
+                              ),
+
+                              new IconButton(
+                                onPressed: () {},
+                                icon: new Icon(
+                                    widget.pet.favorite? Icons.favorite_border:  Icons.favorite,
+                                  color: Colors.red, size: 40
+                                ),
+
+                              )
+                            ]
                           ),
                         ],
                       ),
@@ -108,11 +146,9 @@ class PetDetail extends StatelessWidget {
                   padding: EdgeInsets.all(8),
                   child: Row(
                     children: [
-
                       buildPetFeature("4 months", "Age"),
                       buildPetFeature("Grey", "Color"),
-                      buildPetFeature("11 Kg", "Weight"),
-
+                      buildPetFeature("5 Kg", "Weight"),
                     ],
                   ),
                 ),
@@ -277,5 +313,4 @@ class PetDetail extends StatelessWidget {
       ),
     );
   }
-
 }
