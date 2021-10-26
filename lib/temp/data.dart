@@ -2,7 +2,6 @@ enum Category { CAT, DOG, BUNNY, HAMSTER }
 enum Condition { Adoption, Disappear, Mating }
 
 class Pet {
-
   String name;
   String location;
   String distance;

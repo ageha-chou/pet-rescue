@@ -5,6 +5,7 @@ import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
 import 'package:pet_rescue/modules/volunteer_report/pet_report_screens.dart';
+import 'package:pet_rescue/modules/wishlist/wishlist_screen.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/temp/principal.dart';
 
@@ -41,6 +42,7 @@ class HomeTab extends GetView<MainController> {
               label: 'Wish List',
               imageUrl: 'assets/images/wish-list.png',
               ctx: context,
+              onTapHandler: () => Get.to(() => Wishlist()),
             ),
             if (user.role == Roles.volunteer)
               _buildCard(
