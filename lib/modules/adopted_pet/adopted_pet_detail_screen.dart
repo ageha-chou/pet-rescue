@@ -58,6 +58,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                   tag: pet.tag,
                   child: Container(
                     decoration: BoxDecoration(
+                      color: Color.fromRGBO(253, 246, 240, 1),
                       image: DecorationImage(
                         image: NetworkImage(pet.imageUrl),
                         fit: BoxFit.cover,
