@@ -104,6 +104,7 @@ class _PrincipalState extends State<Principal> {
                 ],
               ),
             ),
+
             Padding(
               padding: EdgeInsets.all(16),
               child: Row(
@@ -130,6 +131,35 @@ class _PrincipalState extends State<Principal> {
                 physics: BouncingScrollPhysics(),
                 scrollDirection: Axis.horizontal,
                 children: buildNewestPet(),
+              ),
+            ),
+
+            Padding(
+              padding: EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "You may like these pet",
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.grey[800],
+                    ),
+                  ),
+                  Icon(
+                    Icons.more_horiz,
+                    color: Colors.grey[800],
+                  ),
+                ],
+              ),
+            ),
+            Container(
+              height: 280,
+              child: ListView(
+                physics: BouncingScrollPhysics(),
+                scrollDirection: Axis.horizontal,
+                children: buildFavoritePet(),
               ),
             ),
           ],
@@ -230,6 +260,15 @@ class _PrincipalState extends State<Principal> {
     List<Widget> list = [];
     for (var i = 0; i < pets.length; i++) {
       if (pets[i].newest) {
+        list.add(PetWidget(pet: pets[i], index: i));
+      }
+    }
+    return list;
+  }
+  List<Widget> buildFavoritePet() {
+    List<Widget> list = [];
+    for (var i = 0; i < pets.length; i++) {
+      if (pets[i].favorite) {
         list.add(PetWidget(pet: pets[i], index: i));
       }
     }

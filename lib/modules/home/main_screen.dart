@@ -124,7 +124,9 @@ class MainScreen extends GetView<MainController> {
       title: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (user.role != Roles.guest)
+          if (controller.currentTab.value == MainTabs.me) Icon(Icons.logout),
+          if (user.role != Roles.guest &&
+              controller.currentTab.value != MainTabs.me)
             Row(
               children: [
                 CircleAvatar(

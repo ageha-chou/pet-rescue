@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:pet_rescue/modules/adopted_pet/adopted_pet_form.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_biding.dart';
 import 'package:pet_rescue/modules/adopter_report/adopter_report_screen.dart';
 import 'package:pet_rescue/modules/adopter_report/volunteer_route.dart';
@@ -36,6 +37,10 @@ class AppPages {
       name: Routes.VOLUNTEER_REPORT_LIST,
       page: () => WaitingPetScreen(),
       binding: VolunteerReportBinding(),
+    ),
+    GetPage(
+      name: Routes.ADOPTED_PET_FORM,
+      page: () => AdoptedPetForm(),
     ),
     GetPage(
       name: Routes.PET_DIARY,
