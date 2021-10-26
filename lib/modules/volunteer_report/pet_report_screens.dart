@@ -61,7 +61,7 @@ Widget _buildNotificationCard(
                 borderRadius: BorderRadius.circular(30.0),
                 child: Image.network("https://bom.to/ZiKclZ"),
               )
-              ),
+          ),
           Padding(padding: EdgeInsets.only(top: 5.0)),
           Column(
             children: [
@@ -78,10 +78,10 @@ Widget _buildNotificationCard(
           ),
           const Divider(),
           TextButton(
-              style: ButtonStyle(),
-              child: const Text('Accept', style: TextStyle(fontSize: 18.0)),
-              onPressed: () => Get.to(() => WaitingPetScreen()),
-            ),
+            style: ButtonStyle(),
+            child: const Text('Accept', style: TextStyle(fontSize: 18.0)),
+            onPressed: () => Get.to(() => WaitingPetScreen()),
+          ),
           const Divider(
             thickness: 2,
           ),
@@ -97,7 +97,6 @@ Widget _buildNotificationCard(
       ),
     ),
   );
-
   return Container(
     child: Card(
       child: Column(
