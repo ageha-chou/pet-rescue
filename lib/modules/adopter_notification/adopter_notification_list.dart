@@ -38,7 +38,14 @@ class AdopterNotificationList extends StatelessWidget {
                       style: TextStyle(color: ColorConstants.red),
                     ),
                     TextSpan(text: 'has canceled your report.\n'),
-                    TextSpan(text: 'Reason: ... '),
+                    TextSpan(text: 'Reason: ... \n'),
+                    TextSpan(
+                      text: '8h',
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -62,7 +69,14 @@ class AdopterNotificationList extends StatelessWidget {
                       text: 'Pet Name ',
                       style: TextStyle(color: ColorConstants.red),
                     ),
-                    TextSpan(text: '\'s diary has been updated! '),
+                    TextSpan(text: '\'s diary has been updated!\n'),
+                    TextSpan(
+                      text: '1d',
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -85,8 +99,15 @@ class AdopterNotificationList extends StatelessWidget {
                         text: 'You are late 2 days for updating your pet '
                             'diary of '),
                     TextSpan(
-                      text: 'Pet Name',
+                      text: 'Pet Name\n',
                       style: TextStyle(color: ColorConstants.red),
+                    ),
+                    TextSpan(
+                      text: '1w',
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                        fontSize: 12,
+                      ),
                     ),
                   ],
                 ),
@@ -113,6 +134,13 @@ class AdopterNotificationList extends StatelessWidget {
                     TextSpan(
                         text: 'has brought your reported abandoned pet to the '
                             'center'),
+                    TextSpan(
+                      text: '\n2w',
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -120,7 +148,7 @@ class AdopterNotificationList extends StatelessWidget {
           ],
         ),
       );
-    }else{
+    } else {
       return RefreshIndicator(
         onRefresh: () {
           return Future.delayed(Duration(milliseconds: 500))
@@ -129,8 +157,7 @@ class AdopterNotificationList extends StatelessWidget {
         child: ListView(
           children: [
             VolunteerNotificationItem(
-              imgUrl:
-              'https://www.linkpicture.com/q/logo_8.png',
+              imgUrl: 'https://www.linkpicture.com/q/logo_8.png',
               title: 'Pet rescue announcement',
               icon: Icon(
                 Icons.volunteer_activism,
@@ -149,46 +176,18 @@ class AdopterNotificationList extends StatelessWidget {
                       text: 'Mai Linh ',
                       style: TextStyle(color: ColorConstants.red),
                     ),
-
                     TextSpan(
                       text: '\n1 minute ago...',
-                      style: TextStyle(color: ColorConstants.red,),
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             VolunteerNotificationItem(
-              imgUrl:
-              'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200',
-              title: 'Feedback notification',
-              icon: Icon(
-                Icons.feedback,
-                size: 20,
-              ),
-              circleColor: Colors.red[600]!,
-              isNew: true,
-              content: RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.headline4,
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Mai Trinh',
-                      style: TextStyle(color: ColorConstants.red,),
-                    ),
-                    TextSpan(
-                        text: ' has given you 5 stars to your task !!!'),
-                    TextSpan(
-                      text: '\n2 minutes ago...',
-                      style: TextStyle(color: ColorConstants.red,),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            VolunteerNotificationItem(
-              imgUrl:
-              'https://www.linkpicture.com/q/logo_8.png',
+              imgUrl: 'https://www.linkpicture.com/q/logo_8.png',
               title: 'Pet rescue announcement',
               icon: Icon(
                 Icons.announcement_rounded,
@@ -208,15 +207,16 @@ class AdopterNotificationList extends StatelessWidget {
                     ),
                     TextSpan(
                       text: '\n5 minutes ago...',
-                      style: TextStyle(color: ColorConstants.red,),
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             VolunteerNotificationItem(
-              imgUrl:
-              'https://www.linkpicture.com/q/logo_8.png',
+              imgUrl: 'https://www.linkpicture.com/q/logo_8.png',
               title: 'Pet rescue announcement',
               icon: Icon(
                 Icons.volunteer_activism,
@@ -230,23 +230,25 @@ class AdopterNotificationList extends StatelessWidget {
                   children: <TextSpan>[
                     TextSpan(text: 'Thanks for your rescue today '),
                     TextSpan(
-                      text: '\n The pet you was rescued will be taken care at  ',
-
+                      text:
+                          '\n The pet you was rescued will be taken care at  ',
                     ),
-                    TextSpan(text: 'Nhóm cứu hộ động vật SAR ',
+                    TextSpan(
+                      text: 'Nhóm cứu hộ động vật SAR ',
                       style: TextStyle(color: ColorConstants.red),
                     ),
                     TextSpan(
                       text: '\n 30 minutes ago...',
-                      style: TextStyle(color: ColorConstants.red,),
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
             VolunteerNotificationItem(
-              imgUrl:
-              'https://www.linkpicture.com/q/logo_8.png',
+              imgUrl: 'https://www.linkpicture.com/q/logo_8.png',
               title: 'Pet rescue announcement',
               icon: Icon(
                 Icons.volunteer_activism,
@@ -262,8 +264,7 @@ class AdopterNotificationList extends StatelessWidget {
                       text: 'Mai Trinh ',
                       style: TextStyle(color: ColorConstants.red),
                     ),
-                    TextSpan(
-                        text: 'has confirmed you arrived '),
+                    TextSpan(text: 'has confirmed you arrived '),
                     TextSpan(
                       text: 'her ',
                       style: TextStyle(color: ColorConstants.red),
@@ -273,13 +274,14 @@ class AdopterNotificationList extends StatelessWidget {
                             'Võ Thị Sáu, Quận 3 HCM'),
                     TextSpan(
                       text: '\n1 hour ago...',
-                      style: TextStyle(color: ColorConstants.red,),
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                      ),
                     ),
                   ],
                 ),
               ),
             ),
-
           ],
         ),
       );
