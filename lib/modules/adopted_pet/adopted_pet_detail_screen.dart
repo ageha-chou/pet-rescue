@@ -131,7 +131,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                           ),
                           ClipOval(
                             child: Material(
-                              color: Colors.green[100],
+                              color: ColorConstants.red.withOpacity(0.3),
                               child: InkWell(
                                 onTap: () {},
                                 child: Container(
@@ -144,7 +144,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                                   child: Center(
                                     child: Image.asset(
                                       'assets/images/pet-diary-black.png',
-                                      color: Colors.green[400],
+                                      color: ColorConstants.red,
                                     ),
                                   ),
                                 ),
@@ -156,7 +156,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                     ),
                     _buildTimeline(
                       '01/10/2021',
-                      'Volunteer name bring to Center',
+                      'Volunteer brought to Center',
                       isFirst: true,
                     ),
                     _buildTimeline(
