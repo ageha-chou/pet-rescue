@@ -130,8 +130,38 @@ class AdopterNotificationList extends StatelessWidget {
           children: [
             VolunteerNotificationItem(
               imgUrl:
+              'https://www.linkpicture.com/q/logo_8.png',
+              title: 'Pet rescue announcement',
+              icon: Icon(
+                Icons.volunteer_activism,
+                size: 20,
+              ),
+              circleColor: Colors.green[600]!,
+              isNew: false,
+              content: RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.headline4,
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: 'You has cancel a report from the reporter  ',
+                    ),
+                    TextSpan(
+                      text: 'Mai Linh ',
+                      style: TextStyle(color: ColorConstants.red),
+                    ),
+
+                    TextSpan(
+                      text: '\n1 minute ago...',
+                      style: TextStyle(color: ColorConstants.red,),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            VolunteerNotificationItem(
+              imgUrl:
               'https://img.freepik.com/free-photo/friendly-smiling-woman-looking-pleased-front_176420-20779.jpg?size=626&ext=jpg&ga=GA1.2.1483557378.1620259200',
-              title: 'Mai Trinh has given you 5 stars to your task !!!',
+              title: 'Feedback notification',
               icon: Icon(
                 Icons.feedback,
                 size: 20,
@@ -143,7 +173,13 @@ class AdopterNotificationList extends StatelessWidget {
                   style: Theme.of(context).textTheme.headline4,
                   children: <TextSpan>[
                     TextSpan(
-                      text: '2 minutes ago...',
+                      text: 'Mai Trinh',
+                      style: TextStyle(color: ColorConstants.red,),
+                    ),
+                    TextSpan(
+                        text: ' has given you 5 stars to your task !!!'),
+                    TextSpan(
+                      text: '\n2 minutes ago...',
                       style: TextStyle(color: ColorConstants.red,),
                     ),
                   ],
@@ -243,9 +279,6 @@ class AdopterNotificationList extends StatelessWidget {
                 ),
               ),
             ),
-
-
-
 
           ],
         ),
