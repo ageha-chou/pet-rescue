@@ -4,9 +4,7 @@ import 'package:pet_rescue/temp/user_avatar.dart';
 
 import 'data.dart';
 
-
 class PetDetail extends StatefulWidget {
-
   final Pet pet;
 
   PetDetail({required this.pet});
@@ -16,18 +14,17 @@ class PetDetail extends StatefulWidget {
 }
 
 class _PetDetailState extends State<PetDetail> {
-
-
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
     onClickLikeButton();
   }
+
   late bool isClicked = false;
-  bool onClickLikeButton(){
-    if(isClicked){
-      isClicked =  false;
-    }else{
+  bool onClickLikeButton() {
+    if (isClicked) {
+      isClicked = false;
+    } else {
       isClicked = true;
     }
     print(isClicked);
@@ -37,7 +34,7 @@ class _PetDetailState extends State<PetDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Color.fromRGBO(253, 246, 240, 1),
+      backgroundColor: Color.fromRGBO(253, 246, 240, 1),
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         brightness: Brightness.light,
@@ -65,7 +62,6 @@ class _PetDetailState extends State<PetDetail> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-
           Expanded(
             child: Stack(
               children: [
@@ -84,64 +80,59 @@ class _PetDetailState extends State<PetDetail> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
-
           Container(
             color: Colors.white,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 Padding(
                   padding: EdgeInsets.all(16),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-
-                          Row(
-                            children:[
-                              Text(
-                                widget.pet.name,
-                                style: TextStyle(
-                                  color: Colors.grey[800],
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 24,
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  widget.pet.name,
+                                  style: TextStyle(
+                                    color: Colors.grey[800],
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 24,
+                                  ),
                                 ),
-                              ),
-
-                              SizedBox(
-                                height: 8,
-                                width: 92
-                              ),
-
-                              new IconButton(
-                                onPressed: () {},
-                                icon: new Icon(
-                                    widget.pet.favorite? Icons.favorite_border:  Icons.favorite,
-                                  color: Colors.red, size: 40
+                                Container(
+                                  height: 50,
+                                  width: 50,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: widget.pet.favorite
+                                        ? Colors.red[400]
+                                        : Colors.grey,
+                                  ),
+                                  child: Icon(
+                                    Icons.favorite,
+                                    size: 24,
+                                    color: widget.pet.favorite
+                                        ? Colors.white
+                                        : Colors.grey[300],
+                                  ),
                                 ),
-
-                              )
-                            ]
-                          ),
-                        ],
-                      ),
-
-                      Container(
-                        height: 50,
-                        width: 45,
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-
                 Padding(
                   padding: EdgeInsets.all(8),
                   child: Row(
@@ -152,7 +143,6 @@ class _PetDetailState extends State<PetDetail> {
                     ],
                   ),
                 ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -164,11 +154,9 @@ class _PetDetailState extends State<PetDetail> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 16,
                 ),
-
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
                   child: Text(
@@ -179,30 +167,24 @@ class _PetDetailState extends State<PetDetail> {
                     ),
                   ),
                 ),
-
                 SizedBox(
                   height: 16,
                 ),
-
                 Padding(
-                  padding: EdgeInsets.only(right: 16, left: 16, top: 16, bottom: 24),
+                  padding:
+                      EdgeInsets.only(right: 16, left: 16, top: 16, bottom: 24),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-
                       Row(
                         children: [
-
                           UserAvatar(),
-
                           SizedBox(
                             width: 12,
                           ),
-
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-
                               Text(
                                 "Posted by",
                                 style: TextStyle(
@@ -211,11 +193,9 @@ class _PetDetailState extends State<PetDetail> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-
                               SizedBox(
                                 height: 4,
                               ),
-
                               Text(
                                 "Nannie Barker",
                                 style: TextStyle(
@@ -223,15 +203,13 @@ class _PetDetailState extends State<PetDetail> {
                                   fontSize: 14,
                                 ),
                               ),
-
                             ],
                           ),
-
                         ],
                       ),
-
                       Container(
-                        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 20),
+                        padding:
+                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.all(
                             Radius.circular(20),
@@ -255,21 +233,18 @@ class _PetDetailState extends State<PetDetail> {
                           ),
                         ),
                       ),
-
                     ],
                   ),
                 ),
-
               ],
             ),
           ),
-
         ],
       ),
     );
   }
 
-  buildPetFeature(String value, String feature){
+  buildPetFeature(String value, String feature) {
     return Expanded(
       child: Container(
         height: 70,
@@ -286,7 +261,6 @@ class _PetDetailState extends State<PetDetail> {
         ),
         child: Column(
           children: [
-
             Text(
               value,
               style: TextStyle(
@@ -295,11 +269,9 @@ class _PetDetailState extends State<PetDetail> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             SizedBox(
               height: 4,
             ),
-
             Text(
               feature,
               style: TextStyle(
@@ -307,7 +279,6 @@ class _PetDetailState extends State<PetDetail> {
                 fontSize: 14,
               ),
             ),
-
           ],
         ),
       ),
