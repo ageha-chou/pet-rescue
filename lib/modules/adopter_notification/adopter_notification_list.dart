@@ -51,6 +51,36 @@ class AdopterNotificationList extends StatelessWidget {
               ),
             ),
             AdopterNotificationItem(
+              imgUrl: 'assets/images/logo.png',
+              title: 'Your adopting form was approved',
+              icon: Icon(
+                Icons.announcement_rounded,
+                size: 20,
+              ),
+              circleColor: Colors.blue[600]!,
+              isNew: true,
+              content: RichText(
+                text: TextSpan(
+                  style: Theme.of(context).textTheme.headline4,
+                  children: <TextSpan>[
+                    TextSpan(text: 'Your adopting form for '),
+                    TextSpan(
+                      text: 'Pet name ',
+                      style: TextStyle(color: ColorConstants.red),
+                    ),
+                    TextSpan(text: 'was approved.\n'),
+                    TextSpan(
+                      text: '12h',
+                      style: TextStyle(
+                        color: ColorConstants.red,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            AdopterNotificationItem(
               imgUrl:
                   'https://meowtel.com/img/assets/home/hero-image-cat-1.png',
               title: 'Thanks for updating pet diary',
