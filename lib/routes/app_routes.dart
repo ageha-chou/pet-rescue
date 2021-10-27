@@ -9,5 +9,5 @@ abstract class Routes {
   static const REPORTER_ROUTE = '/reporter-route';
   static const VOLUNTEER_REPORT_LIST = '/volunteer_reports-list';
   static const WISH_LIST = '/wish-list';
-  static const ADOPTED_PET_FORM = '/adopted-pet-form';
+  static const EDIT_ADOPTED_PET = '/edit-adopted-pet';
 }

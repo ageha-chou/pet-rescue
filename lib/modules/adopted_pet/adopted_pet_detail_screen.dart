@@ -5,15 +5,19 @@ import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 import 'package:timeline_tile/timeline_tile.dart';
 
-import 'adopted_pet_form_controller.dart';
+import 'edit_adopted_pet_controller.dart';
 
 class AdoptedPetDetailScreen extends StatelessWidget {
   final AdoptedPet pet;
+  bool isPending;
 
-  AdoptedPetDetailScreen(this.pet);
+  AdoptedPetDetailScreen(this.pet, this.isPending);
 
   @override
   Widget build(BuildContext context) {
+    final image =
+        isPending ? AssetImage(pet.imageUrl) : NetworkImage(pet.imageUrl);
+
     return Scaffold(
       backgroundColor: Theme.of(context).backgroundColor,
       extendBodyBehindAppBar: true,
@@ -37,7 +41,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
               onTap: () async {
                 final controller =
                     Get.put(AdoptedPetFormController()..pet = pet);
-                await Get.toNamed(Routes.ADOPTED_PET_FORM);
+                await Get.toNamed(Routes.EDIT_ADOPTED_PET);
                 Get.delete<AdoptedPetFormController>();
               },
               child: Icon(
@@ -60,7 +64,7 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(253, 246, 240, 1),
                       image: DecorationImage(
-                        image: NetworkImage(pet.imageUrl),
+                        image: image as ImageProvider,
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.only(
@@ -130,28 +134,29 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                                       fontSize: 24,
                                     ),
                           ),
-                          ClipOval(
-                            child: Material(
-                              color: ColorConstants.red.withOpacity(0.3),
-                              child: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  padding: const EdgeInsets.all(8.0),
-                                  height: 50,
-                                  width: 50,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(30.0),
-                                  ),
-                                  child: Center(
-                                    child: Image.asset(
-                                      'assets/images/pet-diary-black.png',
-                                      color: ColorConstants.red,
+                          if (!isPending)
+                            ClipOval(
+                              child: Material(
+                                color: ColorConstants.red.withOpacity(0.3),
+                                child: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8.0),
+                                    height: 50,
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(30.0),
+                                    ),
+                                    child: Center(
+                                      child: Image.asset(
+                                        'assets/images/pet-diary-black.png',
+                                        color: ColorConstants.red,
+                                      ),
                                     ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
                         ],
                       ),
                     ),
@@ -163,18 +168,21 @@ class AdoptedPetDetailScreen extends StatelessWidget {
                     _buildTimeline(
                       '02/10/2021',
                       '3-in-1 vaccination',
+                      isLast: isPending ? true : false,
                     ),
-                    _buildTimeline(
-                      '08/10/2021',
-                      'Adopted by Mai Trinh',
-                      height: 40,
-                    ),
-                    _buildTimeline(
-                      '24/10/2021',
-                      'Dewormed',
-                      height: 60,
-                      isLast: true,
-                    ),
+                    if (!isPending) ...[
+                      _buildTimeline(
+                        '08/10/2021',
+                        'Adopted by Mai Trinh',
+                        height: 40,
+                      ),
+                      _buildTimeline(
+                        '24/10/2021',
+                        'Dewormed',
+                        height: 60,
+                        isLast: true,
+                      ),
+                    ],
                   ],
                 ),
               ),

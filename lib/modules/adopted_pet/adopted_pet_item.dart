@@ -1,14 +1,19 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:pet_rescue/modules/adopted_pet/adopted_pet_controller.dart';
 import 'package:pet_rescue/modules/adopted_pet/adopted_pet_detail_screen.dart';
+import 'package:pet_rescue/modules/adopted_pet/adopted_pet_form.dart';
+import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 class AdoptedPetItem extends StatelessWidget {
   final AdoptedPet pet;
+  bool isPending;
 
   AdoptedPetItem({
     required this.pet,
+    this.isPending = false,
   });
 
   final female = Image.asset(
@@ -27,7 +32,7 @@ class AdoptedPetItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Get.to(() => AdoptedPetDetailScreen(pet));
+        Get.to(() => AdoptedPetDetailScreen(pet, isPending));
       },
       child: Container(
         margin: const EdgeInsets.only(
@@ -54,10 +59,15 @@ class AdoptedPetItem extends StatelessWidget {
                   height: 130,
                   child: Hero(
                     tag: pet.tag,
-                    child: Image.network(
-                      pet.imageUrl,
-                      fit: BoxFit.cover,
-                    ),
+                    child: isPending
+                        ? Image.asset(
+                            pet.imageUrl,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            pet.imageUrl,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ),
@@ -74,9 +84,13 @@ class AdoptedPetItem extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Pet name: ${pet.name}',
-                            style: Theme.of(context).textTheme.headline6,
+                          Expanded(
+                            child: Text(
+                              'Pet name: ${pet.name}',
+                              style: Theme.of(context).textTheme.headline6,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1,
+                            ),
                           ),
                           pet.isFemale ? female : male,
                         ],
@@ -86,43 +100,90 @@ class AdoptedPetItem extends StatelessWidget {
                         'Age: ${pet.age}',
                         style: Theme.of(context).textTheme.subtitle2,
                       ),
-                      const SizedBox(height: 3.0),
-                      Text(
-                        'Last updated: ${pet.updatedDate}',
-                        style: Theme.of(context).textTheme.subtitle2,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(
-                              border: Border.all(
-                                color: ColorConstants.red,
-                              ),
-                              borderRadius: BorderRadius.all(
-                                Radius.circular(10.0),
-                              ),
-                            ),
-                            margin: const EdgeInsets.only(
-                              top: 20.0,
-                              right: 8.0,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 8.0,
-                              vertical: 5.0,
-                            ),
-                            child: Text(
-                              'Pet diaries',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline6!
-                                  .copyWith(
+                      if (isPending) ...[
+                        const SizedBox(height: 3.0),
+                        Text(
+                          'Location: ${pet.location}',
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(AdoptedPetForm(),
+                                    arguments: true);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
                                     color: ColorConstants.red,
                                   ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
+                                ),
+                                margin: const EdgeInsets.only(
+                                  top: 20.0,
+                                  right: 8.0,
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                  vertical: 5.0,
+                                ),
+                                child: Text(
+                                  'Submitted form',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6!
+                                      .copyWith(
+                                        color: ColorConstants.red,
+                                      ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
+                      if (!isPending) ...[
+                        const SizedBox(height: 3.0),
+                        Text(
+                          'Last updated: ${pet.updatedDate}',
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: ColorConstants.red,
+                                ),
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(10.0),
+                                ),
+                              ),
+                              margin: const EdgeInsets.only(
+                                top: 20.0,
+                                right: 8.0,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 8.0,
+                                vertical: 5.0,
+                              ),
+                              child: Text(
+                                'Pet diaries',
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline6!
+                                    .copyWith(
+                                      color: ColorConstants.red,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ],
                   ),
                 ),
