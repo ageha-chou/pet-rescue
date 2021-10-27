@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pet_rescue/data/report_status.dart';
+import 'package:pet_rescue/modules/adopted_pet/adopted_pet_form.dart';
+import 'package:pet_rescue/shared/constants/color.dart';
 import 'package:pet_rescue/temp/user_avatar.dart';
 
 import 'data.dart';
@@ -115,14 +118,14 @@ class _PetDetailState extends State<PetDetail> {
                                     shape: BoxShape.circle,
                                     color: widget.pet.favorite
                                         ? Colors.red[400]
-                                        : Colors.grey,
+                                        : Colors.grey[300],
                                   ),
                                   child: Icon(
                                     Icons.favorite,
                                     size: 24,
                                     color: widget.pet.favorite
                                         ? Colors.white
-                                        : Colors.grey[300],
+                                        : Colors.grey,
                                   ),
                                 ),
                               ],
@@ -207,29 +210,34 @@ class _PetDetailState extends State<PetDetail> {
                           ),
                         ],
                       ),
-                      Container(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 12, horizontal: 20),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20),
-                          ),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.blue[300]!.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 5,
-                              offset: Offset(0, 0),
+                      GestureDetector(
+                        onTap: () {
+                          Get.to(() => AdoptedPetForm());
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 12, horizontal: 20),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(20),
                             ),
-                          ],
-                          color: Colors.blue[300],
-                        ),
-                        child: Text(
-                          "Adopt me",
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: ColorConstants.primary.withOpacity(0.5),
+                                spreadRadius: 3,
+                                blurRadius: 5,
+                                offset: Offset(0, 0),
+                              ),
+                            ],
+                            color: ColorConstants.primary,
+                          ),
+                          child: Text(
+                            "Adopt me",
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
                       ),
