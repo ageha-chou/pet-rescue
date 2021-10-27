@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/modules/auth/sign_in/sign_in_screen.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 
 Future main() async {
@@ -62,7 +63,8 @@ class MyApp extends StatelessWidget {
           secondary: Color.fromRGBO(165, 213, 213, 0.8),
         ),
       ),
-      initialRoute: Routes.HOME,
+      // initialRoute: Routes.HOME,
+      home: SignInScreen(),
       getPages: AppPages.routes,
     );
   }
