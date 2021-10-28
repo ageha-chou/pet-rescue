@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/data/tabs.dart';
 import 'package:pet_rescue/models/user.dart';
+import 'package:pet_rescue/modules/adopted_pet/tabs/adopted_pet_tabs_controller.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/shared.dart';
@@ -10,6 +11,7 @@ import 'package:pet_rescue/shared/shared.dart';
 class MainScreen extends GetView<MainController> {
   @override
   Widget build(BuildContext context) {
+    Get.put(AdoptedPetTabsController());
     return WillPopScope(
       child: Obx(() => _buildWidget(context)),
       onWillPop: () async => false,

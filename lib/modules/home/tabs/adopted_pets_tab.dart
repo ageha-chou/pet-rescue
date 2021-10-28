@@ -6,7 +6,7 @@ import 'package:pet_rescue/modules/adopted_pet/tabs/pending_pets_list.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 class AdoptedPetsTab extends StatelessWidget {
-  final _adoptedPetTabs = Get.put(AdoptedPetTabsController());
+  final _adoptedPetTabs = Get.find<AdoptedPetTabsController>();
   @override
   Widget build(BuildContext context) {
     return _buildBody(context);

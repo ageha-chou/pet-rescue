@@ -111,13 +111,15 @@ class AdoptedPetItem extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(AdoptedPetForm(),
-                                    arguments: true);
+                                if (pet.isApprove) return;
+                                Get.to(AdoptedPetForm(), arguments: true);
                               },
                               child: Container(
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: ColorConstants.red,
+                                    color: pet.isApprove
+                                        ? Colors.green[300]!
+                                        : ColorConstants.red,
                                   ),
                                   borderRadius: BorderRadius.all(
                                     Radius.circular(10.0),
@@ -132,12 +134,14 @@ class AdoptedPetItem extends StatelessWidget {
                                   vertical: 5.0,
                                 ),
                                 child: Text(
-                                  'Submitted form',
+                                  pet.isApprove ? 'Approved' : 'Submitted form',
                                   style: Theme.of(context)
                                       .textTheme
                                       .headline6!
                                       .copyWith(
-                                        color: ColorConstants.red,
+                                        color: pet.isApprove
+                                            ? Colors.green[300]
+                                            : ColorConstants.red,
                                       ),
                                 ),
                               ),
