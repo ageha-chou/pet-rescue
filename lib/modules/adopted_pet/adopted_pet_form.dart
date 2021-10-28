@@ -8,6 +8,8 @@ import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
+import 'tabs/adopted_pet_tabs_controller.dart';
+
 class AdoptedPetForm extends StatefulWidget {
   const AdoptedPetForm({Key? key}) : super(key: key);
 
@@ -405,10 +407,17 @@ class _AdoptedPetFormState extends State<AdoptedPetForm> {
               ),
               child: ElevatedButton(
                 onPressed: () {
-                  Get.offNamedUntil(
-                      Routes.HOME, ModalRoute.withName(Routes.HOME));
-                  final mainController = Get.find<MainController>();
-                  mainController.onSwitchTab(1);
+                  if (isPending == null) {
+                    Get.offNamedUntil(
+                        Routes.HOME, ModalRoute.withName(Routes.HOME));
+                    final mainController = Get.find<MainController>();
+                    mainController.onSwitchTab(1);
+                    final _adoptedPetTabs =
+                        Get.find<AdoptedPetTabsController>();
+                    _adoptedPetTabs.controller.animateTo(1);
+                  } else {
+                    Get.back();
+                  }
                 },
                 child: Text(
                   isPending == null ? 'SUBMIT' : 'UPDATE',

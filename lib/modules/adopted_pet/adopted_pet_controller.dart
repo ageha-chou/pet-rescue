@@ -9,6 +9,7 @@ class AdoptedPet {
   String weight;
   String location;
   bool isFemale;
+  bool isApprove;
 
   AdoptedPet({
     required this.age,
@@ -19,6 +20,7 @@ class AdoptedPet {
     required this.tag,
     required this.updatedDate,
     this.location = '',
+    this.isApprove = true,
   });
 }
 
@@ -55,6 +57,7 @@ class AdoptedPetController extends GetxController {
       updatedDate: '',
       location: 'Quận 3, TPHCM',
       weight: '3kg',
+      isApprove: false,
     ),
     AdoptedPet(
       age: '1 year',
