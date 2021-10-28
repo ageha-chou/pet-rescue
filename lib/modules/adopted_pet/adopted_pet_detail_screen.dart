@@ -35,21 +35,22 @@ class AdoptedPetDetailScreen extends StatelessWidget {
           ),
         ),
         actions: [
-          Padding(
-            padding: EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () async {
-                final controller =
-                    Get.put(AdoptedPetFormController()..pet = pet);
-                await Get.toNamed(Routes.EDIT_ADOPTED_PET);
-                Get.delete<AdoptedPetFormController>();
-              },
-              child: Icon(
-                Icons.edit,
-                color: Colors.black,
+          if (!isPending)
+            Padding(
+              padding: EdgeInsets.only(right: 16),
+              child: GestureDetector(
+                onTap: () async {
+                  final controller =
+                      Get.put(AdoptedPetFormController()..pet = pet);
+                  await Get.toNamed(Routes.EDIT_ADOPTED_PET);
+                  Get.delete<AdoptedPetFormController>();
+                },
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.black,
+                ),
               ),
             ),
-          ),
         ],
       ),
       body: Column(
