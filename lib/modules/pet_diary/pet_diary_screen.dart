@@ -16,21 +16,29 @@ class PetDiaryScreen extends StatelessWidget {
         title: Text('Pet Diary'),
         backgroundColor: Theme.of(context).primaryColor,
       ),
-      body: ListView(
-        padding: EdgeInsets.all(20),
+      body: Stack(
         children: [
-          _buildDiaryCard("10/30/2021", "Sushi",
-              "https://www.collinsdictionary.com/images/full/dog_230497594.jpg"),
-          _buildDiaryCard("10/29/2021", "Mit",
-              "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
-          _buildDiaryCard("10/28/2021", "Mit",
-              "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
+          ListView(
+            padding: EdgeInsets.all(20),
+            children: [
+              _buildDiaryCard("10/30/2021", "Sushi",
+                  "https://www.collinsdictionary.com/images/full/dog_230497594.jpg"),
+              _buildDiaryCard("10/29/2021", "Mit",
+                  "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
+              _buildDiaryCard("10/28/2021", "Mit",
+                  "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
+            ],
+          ),
+          Positioned(
+            bottom: 16,
+            right: 16,
+            child: FloatingActionButton(
+              onPressed: () => Get.to(() => AddDiary()),
+              tooltip: 'Create New Diary',
+              child: Icon(Icons.add),
+            ),
+          ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => Get.to(() => AddDiary()),
-        tooltip: 'Create New Diary',
-        child: Icon(Icons.add),
       ),
     );
   }
@@ -48,7 +56,10 @@ class PetDiaryScreen extends StatelessWidget {
             title: Text(name),
             subtitle: Text(date),
             trailing: IconButton(
-              icon: Icon(Icons.delete),
+              icon: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
               tooltip: "Delete",
               onPressed: () {},
             ),

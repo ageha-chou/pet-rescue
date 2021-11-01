@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:pet_rescue/modules/adopted_pet/adopted_pet_controller.dart';
 import 'package:pet_rescue/modules/adopted_pet/adopted_pet_detail_screen.dart';
 import 'package:pet_rescue/modules/adopted_pet/adopted_pet_form.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_screen.dart';
 import 'package:pet_rescue/routes/app_pages.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
@@ -158,31 +159,36 @@ class AdoptedPetItem extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                  color: ColorConstants.red,
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => PetDiaryScreen());
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: ColorConstants.red,
+                                  ),
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(10.0),
+                                  ),
                                 ),
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(10.0),
+                                margin: const EdgeInsets.only(
+                                  top: 20.0,
+                                  right: 8.0,
                                 ),
-                              ),
-                              margin: const EdgeInsets.only(
-                                top: 20.0,
-                                right: 8.0,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 8.0,
-                                vertical: 5.0,
-                              ),
-                              child: Text(
-                                'Pet diaries',
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline6!
-                                    .copyWith(
-                                      color: ColorConstants.red,
-                                    ),
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8.0,
+                                  vertical: 5.0,
+                                ),
+                                child: Text(
+                                  'Pet diaries',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headline6!
+                                      .copyWith(
+                                        color: ColorConstants.red,
+                                      ),
+                                ),
                               ),
                             ),
                           ],
