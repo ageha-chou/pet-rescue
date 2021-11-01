@@ -114,21 +114,6 @@ Widget _buildNotificationCard(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
               TextButton(
-                  style: ButtonStyle(),
-                  child: const Text('ACCEPT'),
-                  onPressed: () => Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(builder: (context) => WaitingPetScreen()),
-                        (Route<dynamic> route) => false,
-                  ),
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                child: const Text('DECLINE'),
-                onPressed: () {/* ... */},
-              ),
-              const SizedBox(width: 8),
-              TextButton(
                 child: const Text('MORE DETAIL'),
                 onPressed: () {
                   Get.to(ReportForm());

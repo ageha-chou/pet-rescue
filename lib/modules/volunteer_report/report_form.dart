@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/shared/constants/color.dart';
 import 'package:pet_rescue/shared/widgets/app_logo.dart';
+
+import 'pet_waiting_screen.dart';
+import 'volunteer_report_controller.dart';
 
 class ReportForm extends StatefulWidget {
   @override
@@ -10,7 +14,7 @@ class ReportForm extends StatefulWidget {
 
 class _ReportFormState extends State<ReportForm> {
   final _formKey = GlobalKey<FormState>();
-
+  final controller = Get.put(VolunteerReportController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -267,6 +271,30 @@ class _ReportFormState extends State<ReportForm> {
                     ]),
               ),
             ),
+
+            const SizedBox(height: 20),
+            TextButton(
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.blue.shade300),
+              ),
+              child: const Text('ACCEPT', style: TextStyle(color: Colors.white)),
+              onPressed: () => Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => WaitingPetScreen()),
+                    (Route<dynamic> route) => false,
+              ),
+            ),
+            const SizedBox(width: 8),
+            TextButton(
+              child: Text('DECLINE', style: TextStyle(color: Colors.white) ),
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all<Color>(Colors.red ),
+              ),
+              onPressed: ()  {
+                Get.back();
+              },
+            ),
+            const SizedBox(width: 8),
           ],
         ),
       ),
