@@ -42,10 +42,10 @@ class AppPages {
       name: Routes.EDIT_ADOPTED_PET,
       page: () => EditAdoptedPet(),
     ),
-    GetPage(
+    /*GetPage(
       name: Routes.PET_DIARY,
       page: () => PetDiaryScreen(),
-    ),
+    ),*/
     GetPage(
       name: Routes.VOLUNTEER_ROUTE,
       page: () => VolunteerRoute(),

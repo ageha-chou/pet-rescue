@@ -14,13 +14,18 @@ List<Pet> getWishlist() {
 
 class Wishlist extends StatelessWidget {
   final list = getWishlist();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
+      backgroundColor: Theme
+          .of(context)
+          .backgroundColor,
       appBar: AppBar(
         title: Text('Wish List'),
-        backgroundColor: Theme.of(context).primaryColor,
+        backgroundColor: Theme
+            .of(context)
+            .primaryColor,
       ),
       body: ListView(
         padding: EdgeInsets.all(20),
@@ -30,45 +35,73 @@ class Wishlist extends StatelessWidget {
       ),
     );
   }
-}
 
-Widget _buildPetCard(Pet pet, BuildContext context) {
-  final String name = pet.name;
-  final String location = pet.location;
-  return Container(
-    child: Card(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          ListTile(
-            leading: CircleAvatar(
-              backgroundColor: Colors.white,
-              backgroundImage: AssetImage(pet.imageUrl),
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget confirmButton = FlatButton(
+      child: Text("Continue"),
+      onPressed: () {},
+    );
+    Widget cancelButton = FlatButton(
+      child: Text("Cancel"),
+      onPressed: () {},
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      //title: Text(""),
+      content: Text("Would you like to continue removing?"),
+      actions: [
+        confirmButton,
+        cancelButton,
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Widget _buildPetCard(Pet pet, BuildContext context) {
+    final String name = pet.name;
+    final String location = pet.location;
+    return Container(
+      child: Card(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ListTile(
+              leading: CircleAvatar(
+                backgroundColor: Colors.white,
+                backgroundImage: AssetImage(pet.imageUrl),
+              ),
+              title: Text(name),
+              subtitle: Text(location),
             ),
-            title: Text(name),
-            subtitle: Text(location),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              TextButton(
-                child: const Text('MORE DETAIL'),
-                onPressed: () {
-                  Get.to(PetDetail(pet: pet));
-                },
-              ),
-              const SizedBox(width: 8),
-              TextButton(
-                child: const Text('REMOVE'),
-                onPressed: () {
-                  getWishlist().remove(pet);
-                },
-              ),
-              const SizedBox(width: 8),
-            ],
-          ),
-        ],
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: <Widget>[
+                TextButton(
+                  child: const Text('MORE DETAIL'),
+                  onPressed: () {
+                    Get.to(PetDetail(pet: pet));
+                  },
+                ),
+                const SizedBox(width: 8),
+                TextButton(
+                  child: const Text('REMOVE'),
+                  onPressed: () {
+                    showAlertDialog(context);
+                  },
+                ),
+                const SizedBox(width: 8),
+              ],
+            ),
+          ],
+        ),
       ),
-    ),
-  );
+    );
+  }
 }
