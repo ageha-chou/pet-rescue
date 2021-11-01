@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:pet_rescue/data/roles.dart';
 import 'package:pet_rescue/models/user.dart';
 import 'package:pet_rescue/modules/home/main_controller.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_screen.dart';
 import 'package:pet_rescue/modules/pets_list/pets_list_screen.dart';
 import 'package:pet_rescue/modules/volunteer_report/pet_report_screens.dart';
 import 'package:pet_rescue/modules/wishlist/wishlist_screen.dart';
@@ -29,7 +30,7 @@ class HomeTab extends GetView<MainController> {
               label: 'Pet Diaries',
               imageUrl: 'assets/images/pet-diary.png',
               ctx: context,
-              onTapHandler: () => Get.toNamed(Routes.PET_DIARY),
+              onTapHandler: () => Get.to(() => PetDiaryScreen()),
             ),
           ],
         ),
