@@ -5,6 +5,7 @@ import 'package:pet_rescue/models/report.dart';
 
 class VolunteerReportController extends GetxController{
   var currentStep = 0.obs;
+  var isDecline = false.obs;
 
   Report report = Report(
     location: '153 Nguyễn Thông, Phường 9, Quận 3, TPHCM',

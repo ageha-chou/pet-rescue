@@ -36,6 +36,8 @@ class _ReporterRoute extends State<ReporterRoute> {
   late BitmapDescriptor volunteerDescriptor;
   late BitmapDescriptor petDescriptor;
 
+  TextEditingController _textFieldController = TextEditingController();
+
   @override
   void initState() {
     super.initState();
@@ -196,7 +198,7 @@ class _ReporterRoute extends State<ReporterRoute> {
                   if (volunteer == null) ...[
                     const SizedBox(height: 8),
                     ..._buildLocation(context, location),
-                    _buildPopupMenu(),
+                    _buildPopupMenu(context),
                   ],
                   // Spacer(),
                 ],
@@ -342,7 +344,7 @@ class _ReporterRoute extends State<ReporterRoute> {
           ],
         ),
         Spacer(),
-        _buildPopupMenu(),
+        _buildPopupMenu(context),
       ],
     );
   }
@@ -366,8 +368,9 @@ class _ReporterRoute extends State<ReporterRoute> {
     ];
   }
 
-  Widget _buildPopupMenu() {
+  Widget _buildPopupMenu(BuildContext context) {
     return PopupMenuButton(
+
       child: Container(
         height: 20,
         margin: EdgeInsets.only(
@@ -379,10 +382,96 @@ class _ReporterRoute extends State<ReporterRoute> {
         ),
       ),
       itemBuilder: (ctx) => [
-        const PopupMenuItem(
-          child: Text('Cancel'),
+         PopupMenuItem(
+          child: ElevatedButton(
+            onPressed: () {
+              showAlertDialog(context);
+            },
+            child: Text(
+              'Cancel',
+              style: Theme.of(context)
+                  .textTheme
+                  .headline5!
+                  .copyWith(
+                color: Colors.red,
+              ),
+            ),
+            style: ButtonStyle(
+              elevation: MaterialStateProperty.all(0),
+              backgroundColor:
+              MaterialStateProperty.all(Colors.white),
+            ),
+          ),
         ),
+
       ],
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+
+    // set up the buttons
+    Widget cancelButton = TextButton(
+      child: Text("Cancel the report"),
+      onPressed:  () {
+        Navigator.of(context).pop(PopupMenuItem(child: Text('')));
+        _displayTextInputDialog(context);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: Text("Continue"),
+      onPressed:  () {
+        Navigator.of(context).pop();
+      },
+    );
+
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: Text("Alert from the Pet Rescue"),
+      content: Text("Are you sure to cancel this report ?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Future<void> _displayTextInputDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Your reason'),
+          content: TextField(
+            controller: _textFieldController,
+            decoration: InputDecoration(hintText: "Ex: I accidently click on \'accept\' report."),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('CANCEL'),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+            FlatButton(
+              child: Text('OK'),
+              onPressed: () {
+                print(_textFieldController.text);
+                Navigator.of(context).pushNamedAndRemoveUntil(
+                    Routes.HOME, (Route<dynamic> route) => false);
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
