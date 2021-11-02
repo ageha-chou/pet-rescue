@@ -5,6 +5,7 @@ import 'package:pet_rescue/modules/adopter_report/adopter_report_screen.dart';
 import 'package:pet_rescue/modules/adopter_report/volunteer_route.dart';
 import 'package:pet_rescue/modules/home/main_binding.dart';
 import 'package:pet_rescue/modules/home/main_screen.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_binding.dart';
 import 'package:pet_rescue/modules/pet_diary/pet_diary_screen.dart';
 import 'package:pet_rescue/modules/report/report_pet_binding.dart';
 import 'package:pet_rescue/modules/report/report_pet_screen.dart';
@@ -42,10 +43,11 @@ class AppPages {
       name: Routes.EDIT_ADOPTED_PET,
       page: () => EditAdoptedPet(),
     ),
-    /*GetPage(
+    GetPage(
       name: Routes.PET_DIARY,
       page: () => PetDiaryScreen(),
-    ),*/
+      binding: PetDiaryBinding(),
+    ),
     GetPage(
       name: Routes.VOLUNTEER_ROUTE,
       page: () => VolunteerRoute(),
