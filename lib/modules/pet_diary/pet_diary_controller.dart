@@ -28,7 +28,7 @@ class PetDiaryController extends GetxController {
           '-questions-nationalgeographic_1228126_4x3.jpg',
       name: 'Susu',
       updatedDate: '25/10/2021',
-      mainActivity: 'Vaccine',
+      mainActivity: 'Vaccinate',
       healthCondition: 'Vomiting',
       petDetails:
           '- Lorem ipsum dolor sit amet, consectetur adipiscing elit.\r\n'
@@ -49,7 +49,7 @@ class PetDiaryController extends GetxController {
       imageUrl: 'https://meowtel.com/img/assets/home/hero-image-cat-1.png',
       name: 'Tom',
       updatedDate: '24/10/2021',
-      mainActivity: 'Dewormed',
+      mainActivity: 'Deworm',
       healthCondition: 'Healthy',
       petDetails:
           'Nulla condimentum risus ut tempus tristique. Proin sed vulputate enim. '
@@ -73,7 +73,7 @@ class PetDiaryController extends GetxController {
           '-questions-nationalgeographic_1228126_4x3.jpg',
       name: 'Susu',
       updatedDate: '20/10/2021',
-      mainActivity: 'Sterilization',
+      mainActivity: 'Sterilize',
       healthCondition: 'Healthy',
       petDetails: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
           'Nullam sed lacus vel urna varius congue in eu nulla. Donec dui nulla, '

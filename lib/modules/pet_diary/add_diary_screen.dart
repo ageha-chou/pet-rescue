@@ -116,16 +116,16 @@ class _MyState extends State<AddDiary> {
                 ),
                 items: [
                   DropdownMenuItem(
-                    child: Text("Vaccine"),
-                    value: "Vaccine",
+                    child: Text("Vaccinate"),
+                    value: "Vaccinate",
                   ),
                   DropdownMenuItem(
-                    child: Text("Dewormed"),
-                    value: "Dewormed",
+                    child: Text("Deworm"),
+                    value: "Deworm",
                   ),
                   DropdownMenuItem(
-                    child: Text("Sterilization"),
-                    value: "Sterilization",
+                    child: Text("Sterilize"),
+                    value: "Sterilize",
                   ),
                   DropdownMenuItem(
                     child: Text("Other"),
