@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/modules/me/history_reports.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 import 'volunteer_edit_profile.dart';
@@ -74,20 +75,6 @@ class UserProfile extends StatelessWidget {
             SizedBox(
               height: 26,
             ),
-            // Text(
-            //   "About",
-            //   style: TextStyle(fontSize: 22),
-            // ),
-            // SizedBox(
-            //   height: 16,
-            // ),
-            // Text(
-            //   "I love pet. I believe that they're deserve to have a better life !!!",
-            //   style: TextStyle(color: Colors.grey, fontSize: 16),
-            // ),
-            // SizedBox(
-            //   height: 24,
-            // ),
             Row(
               children: <Widget>[
                 Column(
@@ -186,83 +173,41 @@ class UserProfile extends StatelessWidget {
             SizedBox(
               height: 22,
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 28, horizontal: 16),
-                    decoration: BoxDecoration(
-                        color: Color(0xffFBB97C),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Color(0xffFCCA9B),
-                                borderRadius: BorderRadius.circular(16)),
-                            child: Image.asset("assets/images/list.png")),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2 - 130,
-                          child: Text(
-                            "List Of report",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5!
-                                .copyWith(color: Colors.white, fontSize: 16),
-                          ),
-                        )
-                      ],
+            Container(
+              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+              margin: EdgeInsets.all(10),
+              child: RaisedButton(
+                onPressed: () {
+                  Get.to (()  => ActivityList());
+                },
+                splashColor: ColorConstants.primary,
+                color: Color(0xffFBB97C),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      "History reports",
+                      style: Theme.of(context).textTheme.headline5!.copyWith(
+                        fontSize: 20,
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
+                    Icon(
+                      Icons.arrow_forward,
+                      color: Colors.white,
+                    )
+                  ],
                 ),
-                SizedBox(
-                  width: 16,
-                ),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                    decoration: BoxDecoration(
-                        color: Color(0xffA5A5A5),
-                        borderRadius: BorderRadius.circular(20)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Container(
-                            padding: EdgeInsets.all(8),
-                            decoration: BoxDecoration(
-                                color: Color(0xffBBBBBB),
-                                borderRadius: BorderRadius.circular(16)),
-                            child: Image.asset("assets/images/list.png")),
-                        SizedBox(
-                          width: 16,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width / 2 - 130,
-                          child: Text(
-                            "List of rescued pets",
-                            style: Theme.of(context)
-                                .textTheme
-                                .headline5!
-                                .copyWith(color: Colors.white, fontSize: 16),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            SizedBox(
-              height: 15,
+              ),
             ),
 
+            SizedBox(
+              height: 2,
+            ),
             Container(
-              constraints: BoxConstraints(maxWidth: 340.0, minHeight: 50.0),
+              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
               margin: EdgeInsets.all(10),
               child: RaisedButton(
                 onPressed: () {
