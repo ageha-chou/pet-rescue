@@ -30,7 +30,7 @@ class HomeTab extends GetView<MainController> {
               label: 'Pet Diaries',
               imageUrl: 'assets/images/pet-diary.png',
               ctx: context,
-              onTapHandler: () => Get.to(() => PetDiaryScreen()),
+              onTapHandler: () => Get.toNamed(Routes.PET_DIARY),
             ),
           ],
         ),

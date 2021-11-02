@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
-import 'package:pet_rescue/modules/report/report_pet_screen.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_controller.dart';
+import 'package:pet_rescue/modules/pet_diary/pet_diary_details_screen.dart';
 
 import 'add_diary_screen.dart';
 
-class PetDiaryScreen extends StatelessWidget {
-  const PetDiaryScreen({Key? key}) : super(key: key);
-
+class PetDiaryScreen extends GetView<PetDiaryController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,16 +18,20 @@ class PetDiaryScreen extends StatelessWidget {
       ),
       body: Stack(
         children: [
-          ListView(
+          ListView.builder(
             padding: EdgeInsets.all(20),
-            children: [
-              _buildDiaryCard("10/30/2021", "Sushi",
-                  "https://www.collinsdictionary.com/images/full/dog_230497594.jpg"),
-              _buildDiaryCard("10/29/2021", "Mit",
-                  "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
-              _buildDiaryCard("10/28/2021", "Mit",
-                  "https://www.chamsocpet.com/wp-content/uploads/2020/10/cho-co-the-bi-chan-nan-hay-khong-5.jpg"),
-            ],
+            itemCount: controller.petDiaries.length,
+            itemBuilder: (ctx, i) {
+              PetDiary diary = controller.petDiaries[i];
+              return _buildDiaryCard(
+                diary.updatedDate,
+                diary.name,
+                diary.imageUrl,
+                () => Get.to(
+                  () => PetDiaryDetailsScreen(controller.petDiaries[i]),
+                ),
+              );
+            },
           ),
           Positioned(
             bottom: 16,
@@ -43,11 +47,12 @@ class PetDiaryScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDiaryCard(String date, String name, String imgUrl) {
+  Widget _buildDiaryCard(
+      String date, String name, String imgUrl, VoidCallback onTapHandler) {
     return Container(
       child: Card(
         child: InkWell(
-          onTap: () {},
+          onTap: onTapHandler,
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Colors.white,
