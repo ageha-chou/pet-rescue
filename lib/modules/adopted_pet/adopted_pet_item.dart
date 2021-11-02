@@ -161,7 +161,7 @@ class AdoptedPetItem extends StatelessWidget {
                           children: [
                             GestureDetector(
                               onTap: () {
-                                Get.to(() => PetDiaryScreen());
+                                Get.toNamed(Routes.PET_DIARY);
                               },
                               child: Container(
                                 decoration: BoxDecoration(

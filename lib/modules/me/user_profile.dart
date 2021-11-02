@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:pet_rescue/data/roles.dart';
+import 'package:pet_rescue/modules/home/main_controller.dart';
 import 'package:pet_rescue/modules/me/history_reports.dart';
 import 'package:pet_rescue/shared/constants/color.dart';
 
 import 'volunteer_edit_profile.dart';
 
 class UserProfile extends StatelessWidget {
+  final controller = Get.find<MainController>();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -170,42 +174,43 @@ class UserProfile extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
             ),
-            SizedBox(
-              height: 22,
-            ),
-            Container(
-              constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
-              margin: EdgeInsets.all(10),
-              child: RaisedButton(
-                onPressed: () {
-                  Get.to (()  => ActivityList());
-                },
-                splashColor: ColorConstants.primary,
-                color: Color(0xffFBB97C),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10.0))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    Text(
-                      "History reports",
-                      style: Theme.of(context).textTheme.headline5!.copyWith(
-                        fontSize: 20,
-                        color: Colors.white,
+            if (controller.user.role == Roles.volunteer) ...[
+              SizedBox(
+                height: 22,
+              ),
+              Container(
+                constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
+                margin: EdgeInsets.all(10),
+                child: RaisedButton(
+                  onPressed: () {
+                    Get.to(() => ActivityList());
+                  },
+                  splashColor: ColorConstants.primary,
+                  color: Color(0xffFBB97C),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10.0))),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        "History reports",
+                        style: Theme.of(context).textTheme.headline5!.copyWith(
+                              fontSize: 20,
+                              color: Colors.white,
+                            ),
                       ),
-                    ),
-                    Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    )
-                  ],
+                      Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      )
+                    ],
+                  ),
                 ),
               ),
-            ),
-
-            SizedBox(
-              height: 2,
-            ),
+              SizedBox(
+                height: 2,
+              ),
+            ],
             Container(
               constraints: BoxConstraints(maxWidth: 320.0, minHeight: 50.0),
               margin: EdgeInsets.all(10),
@@ -235,7 +240,6 @@ class UserProfile extends StatelessWidget {
                 ),
               ),
             ),
-
             SizedBox(
               height: 15,
             ),
