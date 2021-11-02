@@ -67,6 +67,7 @@ class AdoptedPetController extends GetxController {
       updatedDate: '',
       location: 'Quận 10, TPHCM',
       weight: '5kg',
+      isApprove: false,
     ),
   ];
 }
